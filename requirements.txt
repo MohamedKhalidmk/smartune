@@ -7,3 +7,21 @@ bitsandbytes>=0.44.0
 datasets>=3.0.0
 torch>=2.4.0
 matplotlib>=3.9.0
+numpy>=1.24.0
+scipy>=1.11.0
+sentence-transformers>=3.0.0
+faiss-cpu>=1.8.0
+
+# lcpfn (LC-PFN forecasting, Adriaensen et al. 2023) is NOT installable
+# via plain `pip install lcpfn` on modern setups — its own PyPI metadata
+# pins torch<=1.11.0 and Python<3.12, neither of which the actual code
+# requires (verified directly against the extracted package source).
+# Install it separately with both pins bypassed:
+#
+#   wget https://files.pythonhosted.org/packages/18/f3/28d0a3b6c38d766638e1d0b2c0b1adb93c817646842a652a68174861edc5/lcpfn-0.1.3-py3-none-any.whl
+#   pip install --no-deps --ignore-requires-python --force-reinstall ./lcpfn-0.1.3-py3-none-any.whl
+#
+# It also needs three runtime patches for modern PyTorch (torch.load
+# weights_only default, nn.TransformerEncoder's is_causal kwarg, and
+# nn.GELU's approximate attribute) — see the notebooks/ comparison
+# scripts for the confirmed working patch code.
