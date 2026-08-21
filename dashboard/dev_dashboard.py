@@ -70,7 +70,16 @@ with tabs[0]:
     st.header("curation/curator.py")
 
     st.subheader("classify_dataset() — no API needed")
-    threshold = st.slider("Threshold", 0.0, 10.0, 6.7, key="cur_thresh")
+
+    auto_threshold = st.checkbox("Auto-compute threshold", value=True, key="cur_auto")
+    threshold_method = st.radio(
+        "Auto method", ["otsu", "percentile"], key="cur_thresh_method",
+        horizontal=True, disabled=not auto_threshold,
+    )
+    manual_threshold = st.slider(
+        "Threshold (used when auto is off)", 0.0, 10.0, 6.7,
+        key="cur_thresh", disabled=auto_threshold,
+    )
     mode = st.radio("Mode", ["normal", "hyper"], key="cur_mode", horizontal=True)
 
     if st.button("Run classify_dataset on fake scored data"):
@@ -83,10 +92,23 @@ with tabs[0]:
                 "clarity": None, "correctness": None, "value": None, "avg_score": None,
                 "keep": None, "reason": "failed", "curation_failed": True}),
         ]
-        show_result("classify_dataset", lambda: {
-            k: [e["_id"] for e in v]
-            for k, v in classify_dataset(fake_scored, threshold=threshold, mode=mode).items()
-        })
+
+        def run():
+            result = classify_dataset(
+                fake_scored,
+                threshold=None if auto_threshold else manual_threshold,
+                mode=mode,
+                threshold_method=threshold_method,
+            )
+            return {
+                "kept": [e["_id"] for e in result["kept"]],
+                "rejected": [e["_id"] for e in result["rejected"]],
+                "failed": [e["_id"] for e in result["failed"]],
+                "threshold_used": result["threshold_used"],
+                "threshold_auto": result["threshold_auto"],
+            }
+
+        show_result("classify_dataset", run)
 
     st.subheader("apply_manual_overrides() — no API needed")
     if st.button("Test override (accept the failed example 'd')"):

@@ -37,7 +37,7 @@ from sentence_transformers import SentenceTransformer
 # PROJECT IMPORTS
 # ============================================================
 
-from common.llm_trace import traced_claude_call
+from evaluation.llm_trace import traced_claude_call
 
 
 # ============================================================
@@ -408,15 +408,105 @@ Respond ONLY with JSON:
 # CLASSIFICATION
 # ============================================================
 
+def compute_auto_threshold(
+    scored: list[dict],
+    method: str = "otsu",
+    percentile: float = 40.0,
+) -> float:
+    """
+    Suggest a quality threshold from the score distribution instead of
+    hardcoding one (e.g. the 6.7 used in the README's reference run).
+
+    method="otsu": finds the score that best separates the distribution
+    into a low-quality and high-quality cluster (Otsu's method, applied
+    to the 1-D score histogram). Works well when scores are roughly
+    bimodal, which is the common case for Haiku-scored examples (most
+    are clearly good or clearly bad, with a thinner middle band).
+
+    method="percentile": simple fallback — threshold = the given
+    percentile of the score distribution (default: 40th percentile,
+    i.e. keep the top 60%).
+
+    curation_failed examples are excluded since they have no avg_score.
+    Raises ValueError if there's nothing to compute from.
+    """
+    scores = np.array(
+        [
+            ex["_curation"]["avg_score"]
+            for ex in scored
+            if not ex["_curation"].get("curation_failed")
+        ],
+        dtype=float,
+    )
+
+    if len(scores) == 0:
+        raise ValueError(
+            "No valid (non-failed) scores to compute a threshold from."
+        )
+
+    if method == "percentile":
+        return float(np.percentile(scores, percentile))
+
+    if method == "otsu":
+        return _otsu_threshold(scores)
+
+    raise ValueError(
+        f"Unknown method: {method!r}. Use 'otsu' or 'percentile'."
+    )
+
+
+def _otsu_threshold(scores: np.ndarray, bins: int = 50) -> float:
+    """Otsu's method over a 0-10 score histogram: pick the split point
+    that maximizes between-cluster variance (low-score vs high-score)."""
+    hist, bin_edges = np.histogram(scores, bins=bins, range=(0.0, 10.0))
+    hist = hist.astype(float)
+    bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
+
+    total = hist.sum()
+    if total == 0:
+        return float(np.median(scores))
+
+    sum_total = np.dot(hist, bin_centers)
+
+    weight_bg, sum_bg = 0.0, 0.0
+    best_threshold = float(bin_centers[0])
+    best_variance = 0.0
+
+    for i in range(bins):
+        weight_bg += hist[i]
+        if weight_bg == 0:
+            continue
+
+        weight_fg = total - weight_bg
+        if weight_fg == 0:
+            break
+
+        sum_bg += bin_centers[i] * hist[i]
+        mean_bg = sum_bg / weight_bg
+        mean_fg = (sum_total - sum_bg) / weight_fg
+
+        between_variance = weight_bg * weight_fg * (mean_bg - mean_fg) ** 2
+        if between_variance > best_variance:
+            best_variance = between_variance
+            best_threshold = float(bin_centers[i])
+
+    return best_threshold
+
+
 def classify_dataset(
     scored: list[dict],
-    threshold: float,
+    threshold: float | None = None,
     mode: str = "normal",
     borderline_width: float = 1.0,
     duplicate_pairs: list[dict] | None = None,
+    threshold_method: str = "otsu",
 ) -> dict:
     """
     Classify each example as kept, rejected, or failed.
+
+    threshold: pass a number to use it as-is (manual override). Leave
+    as None to auto-compute one from the score distribution via
+    compute_auto_threshold(scored, method=threshold_method).
 
     Possible final statuses:
         kept
@@ -426,6 +516,10 @@ def classify_dataset(
         manually_accepted
         manually_rejected
     """
+    threshold_was_auto = threshold is None
+    if threshold_was_auto:
+        threshold = compute_auto_threshold(scored, method=threshold_method)
+
     duplicate_indices = set()
 
     if duplicate_pairs:
@@ -483,6 +577,8 @@ def classify_dataset(
         "kept": kept,
         "rejected": rejected,
         "failed": failed,
+        "threshold_used": threshold,
+        "threshold_auto": threshold_was_auto,
     }
 
 
