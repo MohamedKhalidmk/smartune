@@ -23,12 +23,43 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import streamlit as st
 
 st.set_page_config(page_title="Smartune — Dev/Test", layout="wide")
-st.title("Smartune — Developer Test Dashboard")
-st.caption(
-    "Exercises each module in isolation with fake data. Features needing a real "
-    "GPU (fine-tuning) or API key (Claude calls) are marked and will show the "
-    "actual error if unavailable — that's expected, not a bug."
+
+st.markdown(
+    """
+    <style>
+    html, body, [class*="css"], .stApp, .stMarkdown, .stButton button,
+    .stTextInput input, .stTextArea textarea, .stSelectbox, .stRadio,
+    .stTabs, table, th, td, code, pre {
+        font-family: "Times New Roman", Times, serif !important;
+    }
+    .stApp {
+        background-color: #F5F5F5;
+        color: #303841;
+    }
+    [data-testid="stSidebar"], [data-testid="stExpander"] {
+        background-color: #76ABAE;
+    }
+    .stButton > button, .stDownloadButton > button {
+        background-color: #FF5722;
+        color: #F5F5F5;
+        border: none;
+        font-family: "Times New Roman", Times, serif !important;
+    }
+    .stButton > button:hover, .stDownloadButton > button:hover {
+        background-color: #e64a19;
+        color: #F5F5F5;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        color: #303841;
+        font-family: "Times New Roman", Times, serif !important;
+    }
+    a { color: #FF5722; }
+    </style>
+    """,
+    unsafe_allow_html=True,
 )
+
+st.title("Smartune — Developer Test Dashboard")
 
 # Realistic fake data reused across sections — shaped exactly like what
 # the real pipeline produces, so these tests exercise the real contracts.
@@ -189,14 +220,15 @@ with tabs[2]:
             "noise_floor": noise_floor(curve),
         })
 
-    st.subheader("forecast_n_epochs_ahead() — NEEDS lcpfn installed")
+    st.subheader("forecast_n_epochs_ahead() — no special install needed")
     st.caption(
-        "This is the user-controllable horizon feature. lcpfn needs the special "
-        "install + runtime patches (see requirements.txt) — if it errors here, "
-        "that's the expected failure mode, not a bug in this code."
+        "This is the user-controllable horizon feature. Now runs Arm A "
+        "(parametric curve-fit extrapolation via scipy) instead of the "
+        "old LC-PFN implementation — no GPU, no lcpfn install/patches, "
+        "just numpy/scipy."
     )
     n_ahead = st.slider("Epochs ahead", 1, 10, 3, key="fc_ahead")
-    if st.button("Run LC-PFN forecast"):
+    if st.button("Run curve-fit forecast"):
         from training.forecasting import forecast_n_epochs_ahead
         result = None
         try:
@@ -247,7 +279,7 @@ with tabs[4]:
     st.caption("Uses fake judged results including a deliberate regression case.")
 
     if st.button("Run summary + cross-check on fake judged data"):
-        from evaluation.report import compute_summary, cross_check_with_training_curve
+        from evaluation.report_final import compute_summary, cross_check_with_training_curve
         fake_judged = [
             {"question": "Q1", "reference": "R1", "base_output": "b1", "ft_output": "f1",
              "score_a": {"quality": 6, "coherence": 6, "task_fit": 6},
@@ -304,7 +336,7 @@ with tabs[5]:
         st.markdown(generate_training_report(fake_result, fake_checks))
 
     if st.button("Generate evaluation reports (fake data)"):
-        from evaluation.report import compute_summary, cross_check_with_training_curve, generate_summary_report, generate_detailed_report
+        from evaluation.report_final import compute_summary, cross_check_with_training_curve, generate_summary_report, generate_detailed_report
         fake_judged = [
             {"question": "Q1", "reference": "R1", "base_output": "base text 1", "ft_output": "ft text 1",
              "score_a": {"quality": 6, "coherence": 6, "task_fit": 6},
@@ -330,7 +362,7 @@ with tabs[6]:
 
     st.subheader("common/llm_trace.py — every Claude call in the pipeline")
     if st.button("Load LLM call trace"):
-        from common.llm_trace import load_llm_trace
+        from evaluation.llm_trace import load_llm_trace
         trace = load_llm_trace()
         if not trace:
             st.info("No trace entries yet — run something that calls Claude (any tab above) first.")

@@ -335,30 +335,31 @@ def find_duplicate_candidates(
 
 def verify_duplicates_with_haiku(
     candidates: list[dict],
+    max_workers: int = 10,
 ) -> list[dict]:
     """
-    Send likely duplicate pairs to Haiku for confirmation.
-
+    Send likely duplicate pairs to Haiku for confirmation, 10 at a time.
+ 
     Embedding similarity only identifies candidates. Claude makes the
-    final duplicate judgment.
+    final duplicate judgment. Runs concurrently (like curate_dataset)
+    instead of one call at a time, since this can otherwise be the
+    slowest step for datasets with many candidate pairs.
     """
     prompt_template = """Are these two training examples genuinely
 redundant (would keeping both add no real training value over keeping
 just one), or are they different enough to both be worth keeping?
-
+ 
 Example A:
 Q: {q_a}
-
+ 
 Example B:
 Q: {q_b}
-
+ 
 Respond ONLY with JSON:
 {{"confirmed_duplicate": <true or false>, "reason": "<one sentence>"}}
 """
-
-    verified = []
-
-    for candidate in candidates:
+ 
+    def _verify_one(candidate: dict) -> dict:
         response = traced_claude_call(
             client,
             "curation.curator",
@@ -376,31 +377,45 @@ Respond ONLY with JSON:
                 }
             ],
         )
-
+ 
         text = response.content[0].text.strip()
-
+ 
         if text.startswith("```"):
             text = text.split("```")[1]
-
+ 
             if text.startswith("json"):
                 text = text[4:]
-
+ 
             text = text.strip()
-
+ 
         try:
             result = json.loads(text)
-
+ 
         except json.JSONDecodeError:
             result = {
                 "confirmed_duplicate": False,
                 "reason": "verification_parse_failed",
             }
-
-        verified.append({
+ 
+        return {
             **candidate,
             **result,
-        })
-
+        }
+ 
+    verified = [None] * len(candidates)
+ 
+    with concurrent.futures.ThreadPoolExecutor(
+        max_workers=max_workers
+    ) as executor:
+        futures = {
+            executor.submit(_verify_one, candidate): idx
+            for idx, candidate in enumerate(candidates)
+        }
+ 
+        for future in concurrent.futures.as_completed(futures):
+            idx = futures[future]
+            verified[idx] = future.result()
+ 
     return verified
 
 

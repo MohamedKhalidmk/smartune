@@ -8,8 +8,9 @@ exists yet.
 
 1. assess_dataset_before_finetuning()
    A heuristic, rule-based sanity check. This is explicitly NOT a
-   trained predictive model and is not equivalent to Arm B (LC-PFN),
-   which requires an observed partial training curve.
+   trained predictive model and is not equivalent to the curve-based
+   forecaster (forecasting.py), which requires an observed partial
+   training curve.
 
 2. decide_dataset_warning()
    Claude decides whether the heuristic findings are significant
@@ -25,7 +26,7 @@ import json
 
 import anthropic
 
-from common.llm_trace import traced_claude_call
+from evaluation.llm_trace import traced_claude_call
 
 
 # ---------------------------------------------------------------------------

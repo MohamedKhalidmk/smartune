@@ -40,8 +40,9 @@ FULL_FINETUNE_OVERHEAD_FACTOR = 4.0
 
 FORECAST_EVERY_N_EPOCHS = 3
 
-# LC-PFN can technically run on fewer points, but a forecast from
-# 1-2 points is close to meaningless.
+# The curve-fit forecaster can technically run on fewer points, but a
+# forecast from 1-2 points is close to meaningless (not enough data
+# to distinguish curve shapes).
 MIN_POINTS_FOR_FORECAST = 3
 
 

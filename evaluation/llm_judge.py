@@ -22,7 +22,7 @@ import time
 
 import anthropic
 
-from common.llm_trace import traced_claude_call
+from evaluation.llm_trace import traced_claude_call
 
 
 client = anthropic.Anthropic()

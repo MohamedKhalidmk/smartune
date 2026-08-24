@@ -18,7 +18,7 @@ import json
 
 import anthropic
 
-from common.llm_trace import traced_claude_call
+from evaluation.llm_trace import traced_claude_call
 
 
 # ============================================================
@@ -43,7 +43,7 @@ DECISION_PROMPT = """You are monitoring a fine-tuning run and deciding what acti
 
 Observed validation losses so far: {val_losses}
 
-Forecast (LC-PFN, from the current point forward):
+Forecast (curve extrapolation, from the current point forward):
   median: {median}
   5th percentile: {lower_5}
   95th percentile: {upper_95}
@@ -80,11 +80,11 @@ CONTINUE where nothing needs the user's attention yet.
 
 Respond ONLY with JSON:
 
-{
+{{
     "action": "<one of the four above>",
     "notify_user": <true or false>,
     "reason": "<2-3 sentences, referencing the actual numbers above>"
-}
+}}
 """
 
 
@@ -107,7 +107,7 @@ def decide_training_action(
         Validation-loss history collected during training.
 
     forecast:
-        Output of forecasting.arm_b_forecast_with_uncertainty().
+        Output of forecasting.arm_a_forecast_with_uncertainty().
 
     difficulty:
         Output of forecasting.compute_difficulty_proxy().

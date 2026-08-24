@@ -1,11 +1,25 @@
 """
 training/forecasting.py
 
-Arm B (LC-PFN, Adriaensen et al. 2023) is the sole forecasting method
-in the pipeline going forward.
+Arm A (Domhan-style parametric curve extrapolation, Domhan et al. 2015)
+is the sole forecasting method in the pipeline going forward.
+
+This replaces an earlier Arm B (LC-PFN, Adriaensen et al. 2023)
+implementation. A 10-curve real-fine-tuning-run comparison (see
+results/forecasting_experiment_summary*.json) found Arm A more
+accurate on average and in head-to-head win-count at every tested
+epoch cutoff except one where the two were statistically
+indistinguishable (overlapping error bars on a 30-sample slice) —
+and Arm A's advantage grows with more observed epochs, since LC-PFN's
+edge (if any) only shows up in the very-short-curve regime. Arm A
+also drops the lcpfn dependency entirely (no PyPI version-pin bypass,
+no runtime monkey-patches for modern PyTorch — see the removed
+comments in requirements.txt).
 
 This module produces:
-- a point forecast + uncertainty band from LC-PFN's posterior
+- a point forecast + uncertainty band from an ensemble of three
+  parametric curve fits (pow3 / exp3 / log_power), weighted by fit
+  quality
 - a DA-LCE-style difficulty proxy from the curve's early dynamics
 - a plot of the observed curve + forecast + uncertainty
 
@@ -15,19 +29,50 @@ decision_engine.py.
 
 import matplotlib
 import numpy as np
-import torch
-import lcpfn
-
-from lcpfn import utils as lcpfn_utils
+from scipy.optimize import curve_fit
 
 
-def arm_b_forecast_with_uncertainty(
+# ============================================================
+# ARM A — parametric curve extrapolation
+# ============================================================
+
+def _pow3(x, a, b, c):
+    return a + b * np.power(x, -c)
+
+
+def _exp3(x, a, b, c):
+    return a + b * np.exp(-c * x)
+
+
+def _log_power(x, a, b, c):
+    return a + (1 - a) / (
+        1 + np.power(np.maximum(x, 1e-6) / max(b, 1e-6), c)
+    )
+
+
+_CURVE_FAMILIES = {
+    "pow3": (_pow3, [1.0, 1.0, 0.5]),
+    "exp3": (_exp3, [1.0, 1.0, 0.1]),
+    "log_power": (_log_power, [0.5, 5.0, 1.0]),
+}
+
+# z-score for a 90% interval (5th-95th percentile), used to turn the
+# ensemble's fit-residual std into lower/upper bounds so the output
+# shape matches what decision_engine.py expects (median/lower_5/
+# upper_95), the same shape the earlier LC-PFN implementation produced.
+_Z_90 = 1.645
+
+
+def arm_a_forecast_with_uncertainty(
     val_losses: list[float],
     horizons: list[int],
 ) -> dict:
     """
-    Forecast at each horizon with a real uncertainty band from LC-PFN's
-    own posterior predictive distribution (5th/50th/95th percentile).
+    Forecast at each horizon by fitting three parametric curve families
+    (pow3, exp3, log_power) to the observed validation-loss curve,
+    combining them into a weighted ensemble (weighted by fit quality,
+    i.e. lower sum-of-squared-residuals gets more weight), and
+    extrapolating forward.
 
     Returns:
         {
@@ -36,62 +81,64 @@ def arm_b_forecast_with_uncertainty(
             "upper_95": [...],
         }
     """
-    model = lcpfn.LCPFN()
+    x_observed = np.arange(1, len(val_losses) + 1, dtype=float)
+    y_observed = np.array(val_losses, dtype=float)
 
-    x_train = torch.arange(
-        1,
+    max_horizon = max(horizons)
+    x_future = np.arange(
         len(val_losses) + 1,
-        dtype=torch.float32,
+        len(val_losses) + max_horizon + 1,
+        dtype=float,
     )
 
-    y_train = torch.tensor(
-        val_losses,
-        dtype=torch.float32,
-    )
+    fitted = []
 
-    x_test = torch.tensor(
-        [len(val_losses) + h for h in horizons],
-        dtype=torch.float32,
-    )
-
-    normalizer = lcpfn_utils.pfn_normalize(
-        lb=torch.tensor(0.0),
-        ub=torch.tensor(float("inf")),
-        soft_lb=0.0,
-        soft_ub=torch.tensor(val_losses[0]),
-        minimize=True,
-    )
-
-    y_train_norm = normalizer[0](y_train)
-
-    with torch.no_grad():
-        logits = model(
-            x_train=x_train,
-            y_train=y_train_norm,
-            x_test=x_test,
-        )
-
-        results = {}
-
-        for name, q in [
-            ("lower_5", 0.05),
-            ("median", 0.5),
-            ("upper_95", 0.95),
-        ]:
-            value = model.model.criterion.icdf(logits, q)
-
-            # Defensive shape fix for LC-PFN output.
-            if value.dim() == 1:
-                value = value.unsqueeze(1)
-
-            value = normalizer[1](value)
-
-            result = value.squeeze().tolist()
-            results[name] = (
-                result if isinstance(result, list) else [result]
+    for name, (func, p0) in _CURVE_FAMILIES.items():
+        try:
+            params, _ = curve_fit(
+                func, x_observed, y_observed, p0=p0, maxfev=5000
             )
 
-    return results
+            fitted_y = func(x_observed, *params)
+            residuals = fitted_y - y_observed
+            sse = float(np.sum(residuals ** 2))
+            residual_std = float(np.std(residuals)) + 1e-6
+
+            future_y = func(x_future, *params)
+
+            if np.any(np.isnan(future_y)) or np.any(np.isinf(future_y)):
+                continue
+
+            fitted.append((sse, residual_std, future_y))
+
+        except (RuntimeError, ValueError, TypeError):
+            continue
+
+    if not fitted:
+        # No curve family converged — fall back to a flat forecast at
+        # the last observed value, with a wide uncertainty band since
+        # this is a low-confidence fallback, not a real fit.
+        flat = [val_losses[-1]] * len(horizons)
+        return {
+            "median": flat,
+            "lower_5": [v - _Z_90 for v in flat],
+            "upper_95": [v + _Z_90 for v in flat],
+        }
+
+    sses = np.array([f[0] for f in fitted])
+    weights = np.exp(-sses / (np.std(sses) + 1e-8))
+    weights = weights / weights.sum()
+
+    combined_future = sum(w * f[2] for w, f in zip(weights, fitted))
+    combined_std = sum(w * f[1] for w, f in zip(weights, fitted))
+
+    median = [combined_future[h - 1] for h in horizons]
+
+    return {
+        "median": median,
+        "lower_5": [v - _Z_90 * combined_std for v in median],
+        "upper_95": [v + _Z_90 * combined_std for v in median],
+    }
 
 
 def compute_difficulty_proxy(
@@ -198,7 +245,7 @@ def forecast_n_epochs_ahead(
         range(1, n_epochs_ahead + 1)
     )
 
-    forecast = arm_b_forecast_with_uncertainty(
+    forecast = arm_a_forecast_with_uncertainty(
         val_losses,
         horizons,
     )

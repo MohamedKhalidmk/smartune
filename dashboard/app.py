@@ -50,6 +50,41 @@ st.set_page_config(
     layout="wide",
 )
 
+st.markdown(
+    """
+    <style>
+    html, body, [class*="css"], .stApp, .stMarkdown, .stButton button,
+    .stTextInput input, .stTextArea textarea, .stSelectbox, .stRadio,
+    .stTabs, table, th, td, code, pre {
+        font-family: "Times New Roman", Times, serif !important;
+    }
+    .stApp {
+        background-color: #F5F5F5;
+        color: #303841;
+    }
+    [data-testid="stSidebar"], [data-testid="stExpander"] {
+        background-color: #76ABAE;
+    }
+    .stButton > button, .stDownloadButton > button {
+        background-color: #FF5722;
+        color: #F5F5F5;
+        border: none;
+        font-family: "Times New Roman", Times, serif !important;
+    }
+    .stButton > button:hover, .stDownloadButton > button:hover {
+        background-color: #e64a19;
+        color: #F5F5F5;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        color: #303841;
+        font-family: "Times New Roman", Times, serif !important;
+    }
+    a { color: #FF5722; }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 
 # ============================================================
 # Session State
