@@ -305,9 +305,14 @@ def plot_forecast(
         linewidth=2,
     )
 
+    # Prepend the last observed point so the dashed forecast line visually
+    # connects to the solid observed line instead of leaving a gap.
+    bridge_x = [observed_x[-1]] + forecast_x
+    bridge_median = [val_losses[-1]] + list(forecast["median"])
+
     ax.plot(
-        forecast_x,
-        forecast["median"],
+        bridge_x,
+        bridge_median,
         "b--o",
         label="forecast (median)",
         alpha=0.8,
