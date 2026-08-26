@@ -1,0 +1,7106 @@
+{
+  "run_10_epoch": {
+    "config": {
+      "num_runs": 10,
+      "epochs_trained_per_run": 10,
+      "cutoffs_tested": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "horizons_tested": [
+        1,
+        2,
+        3
+      ],
+      "model_name": "Qwen/Qwen2.5-1.5B-Instruct",
+      "train_size": 40,
+      "val_size": 10,
+      "lcpfn_available": true
+    },
+    "training_loss_curves": {
+      "run_0": [
+        1.7920806407928467,
+        1.515819787979126,
+        1.400411605834961,
+        1.288241982460022,
+        1.237549066543579,
+        1.1944007873535156,
+        1.164419174194336,
+        1.157781958580017,
+        1.1533043384552002,
+        1.1521055698394775
+      ],
+      "run_1": [
+        1.8951966762542725,
+        1.6281499862670898,
+        1.507499098777771,
+        1.3965532779693604,
+        1.3392317295074463,
+        1.3022968769073486,
+        1.267974853515625,
+        1.2471219301223755,
+        1.238189697265625,
+        1.2352460622787476
+      ],
+      "run_2": [
+        1.8135989904403687,
+        1.5318723917007446,
+        1.4035890102386475,
+        1.2871477603912354,
+        1.238710880279541,
+        1.1946178674697876,
+        1.1676223278045654,
+        1.1458327770233154,
+        1.1406923532485962,
+        1.138353705406189
+      ],
+      "run_3": [
+        2.0659916400909424,
+        1.7122392654418945,
+        1.552187204360962,
+        1.4075021743774414,
+        1.3263590335845947,
+        1.2782180309295654,
+        1.2322170734405518,
+        1.2025121450424194,
+        1.1964805126190186,
+        1.1911909580230713
+      ],
+      "run_4": [
+        1.6970230340957642,
+        1.420630693435669,
+        1.302448034286499,
+        1.1835854053497314,
+        1.1333833932876587,
+        1.0974239110946655,
+        1.0621910095214844,
+        1.045780062675476,
+        1.0358625650405884,
+        1.0364305973052979
+      ],
+      "run_5": [
+        1.8120841979980469,
+        1.4560962915420532,
+        1.3070452213287354,
+        1.1730693578720093,
+        1.1072214841842651,
+        1.0587522983551025,
+        1.0229768753051758,
+        0.9967988729476929,
+        0.9899071455001831,
+        0.9879242181777954
+      ],
+      "run_6": [
+        2.072300434112549,
+        1.6983181238174438,
+        1.5541291236877441,
+        1.4136420488357544,
+        1.3518778085708618,
+        1.302024006843567,
+        1.2651256322860718,
+        1.2361098527908325,
+        1.2273521423339844,
+        1.2221612930297852
+      ],
+      "run_7": [
+        1.843274712562561,
+        1.503778100013733,
+        1.379815697669983,
+        1.2569283246994019,
+        1.2005165815353394,
+        1.1454106569290161,
+        1.1067901849746704,
+        1.0882658958435059,
+        1.081602931022644,
+        1.0796386003494263
+      ],
+      "run_8": [
+        1.8193235397338867,
+        1.5383445024490356,
+        1.4123637676239014,
+        1.301532506942749,
+        1.2561286687850952,
+        1.219542145729065,
+        1.1973745822906494,
+        1.1713892221450806,
+        1.1621534824371338,
+        1.1633541584014893
+      ],
+      "run_9": [
+        2.1740610599517822,
+        1.770045518875122,
+        1.5908377170562744,
+        1.413832426071167,
+        1.3274368047714233,
+        1.274893879890442,
+        1.226668119430542,
+        1.1920514106750488,
+        1.1826715469360352,
+        1.1787790060043335
+      ]
+    },
+    "aggregate_mape_by_arm": {
+      "A_domhan": {
+        "mean": 2.5122,
+        "std": 2.3286,
+        "count": 150
+      },
+      "B_lcpfn": {
+        "mean": 2.7629,
+        "std": 3.041,
+        "count": 150
+      }
+    },
+    "mape_by_cutoff": {
+      "A_domhan": {
+        "3": {
+          "mean": 5.9842,
+          "std": 2.6313,
+          "count": 30
+        },
+        "4": {
+          "mean": 1.5261,
+          "std": 1.0664,
+          "count": 30
+        },
+        "5": {
+          "mean": 1.6729,
+          "std": 1.0619,
+          "count": 30
+        },
+        "6": {
+          "mean": 1.4604,
+          "std": 1.0655,
+          "count": 30
+        },
+        "7": {
+          "mean": 1.9174,
+          "std": 1.3492,
+          "count": 30
+        }
+      },
+      "B_lcpfn": {
+        "3": {
+          "mean": 7.9348,
+          "std": 2.9087,
+          "count": 30
+        },
+        "4": {
+          "mean": 1.5775,
+          "std": 1.0953,
+          "count": 30
+        },
+        "5": {
+          "mean": 0.857,
+          "std": 0.5415,
+          "count": 30
+        },
+        "6": {
+          "mean": 1.2841,
+          "std": 0.8222,
+          "count": 30
+        },
+        "7": {
+          "mean": 2.1612,
+          "std": 1.1684,
+          "count": 30
+        }
+      }
+    },
+    "mape_by_run_mean_across_cutoffs_horizons": {
+      "A_domhan": {
+        "run_0": 2.8169,
+        "run_1": 1.8353,
+        "run_2": 1.8701,
+        "run_3": 2.6929,
+        "run_4": 2.726,
+        "run_5": 2.4384,
+        "run_6": 2.9532,
+        "run_7": 2.9931,
+        "run_8": 1.5203,
+        "run_9": 3.2759
+      },
+      "B_lcpfn": {
+        "run_0": 2.8688,
+        "run_1": 2.1543,
+        "run_2": 2.2919,
+        "run_3": 3.1957,
+        "run_4": 2.6292,
+        "run_5": 3.2576,
+        "run_6": 2.444,
+        "run_7": 3.1668,
+        "run_8": 1.8627,
+        "run_9": 3.7585
+      }
+    },
+    "head_to_head_case_level": {
+      "arm_a_wins": 77,
+      "arm_b_wins": 73,
+      "ties": 0,
+      "total_cases": 150
+    },
+    "paired_run_level_test": {
+      "n_runs": 10,
+      "arm_a_wins": 8,
+      "arm_b_wins": 2,
+      "wilcoxon_p": 0.10547,
+      "paired_ttest_p": 0.060238,
+      "mean_gap_B_minus_A": 0.2507
+    },
+    "arm_c_fixed_budget": {
+      "3": {
+        "mean_final_metric": 1.441,
+        "std_final_metric": 0.0984
+      },
+      "4": {
+        "mean_final_metric": 1.3122,
+        "std_final_metric": 0.0878
+      },
+      "5": {
+        "mean_final_metric": 1.2518,
+        "std_final_metric": 0.0818
+      },
+      "6": {
+        "mean_final_metric": 1.2068,
+        "std_final_metric": 0.0813
+      },
+      "7": {
+        "mean_final_metric": 1.1713,
+        "std_final_metric": 0.0798
+      }
+    },
+    "difficulty_labels": {
+      "run_1": "Easy",
+      "run_2": "Easy",
+      "run_8": "Easy",
+      "run_4": "Easy",
+      "run_0": "Medium",
+      "run_3": "Medium",
+      "run_5": "Medium",
+      "run_7": "Hard",
+      "run_9": "Hard",
+      "run_6": "Hard"
+    },
+    "difficulty_scores": {
+      "run_0": 0.0826,
+      "run_1": 0.075,
+      "run_2": 0.0787,
+      "run_3": 0.1,
+      "run_4": 0.0812,
+      "run_5": 0.107,
+      "run_6": 0.1193,
+      "run_7": 0.1116,
+      "run_8": 0.0795,
+      "run_9": 0.1166
+    },
+    "all_cases": [
+      {
+        "curve": "run_0",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.288241982460022,
+        "pred": 1.3401890815328814,
+        "mape": 4.032402280017412,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.237549066543579,
+        "pred": 1.304191208060156,
+        "mape": 5.385010042689103,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1944007873535156,
+        "pred": 1.2802582826311428,
+        "mape": 7.188332106500473,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.288241982460022,
+        "pred": 1.3420937061309814,
+        "mape": 4.180249083958933,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.237549066543579,
+        "pred": 1.330164909362793,
+        "mape": 7.483811779510764,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1944007873535156,
+        "pred": 1.310197353363037,
+        "mape": 9.694950575685473,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.237549066543579,
+        "pred": 1.2535357944785435,
+        "mape": 1.2918055830799986,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1944007873535156,
+        "pred": 1.2160134458486376,
+        "mape": 1.8094980113844392,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.164419174194336,
+        "pred": 1.188561613502377,
+        "mape": 2.0733460804392343,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.237549066543579,
+        "pred": 1.2398320436477661,
+        "mape": 0.1844756839066808,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1944007873535156,
+        "pred": 1.2202317714691162,
+        "mape": 2.162673064946264,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.164419174194336,
+        "pred": 1.1927077770233154,
+        "mape": 2.4294174688897954,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1944007873535156,
+        "pred": 1.1906834183504629,
+        "mape": 0.3112329665563502,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.164419174194336,
+        "pred": 1.154778012341802,
+        "mape": 0.8279803412894304,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.157781958580017,
+        "pred": 1.125631540635516,
+        "mape": 2.776897472468184,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1944007873535156,
+        "pred": 1.1925166845321655,
+        "mape": 0.15774460644192842,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.164419174194336,
+        "pred": 1.16738760471344,
+        "mape": 0.2549280005765851,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.157781958580017,
+        "pred": 1.141676902770996,
+        "mape": 1.3910266686806327,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.164419174194336,
+        "pred": 1.1590097388948881,
+        "mape": 0.4645608230550323,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.157781958580017,
+        "pred": 1.1312872558809224,
+        "mape": 2.288401758444191,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1533043384552002,
+        "pred": 1.108373422031612,
+        "mape": 3.89584214031235,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.164419174194336,
+        "pred": 1.1581693887710571,
+        "mape": 0.536729861701483,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.157781958580017,
+        "pred": 1.1365152597427368,
+        "mape": 1.8368483529803148,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1533043384552002,
+        "pred": 1.1168922185897827,
+        "mape": 3.1571995917564912,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.157781958580017,
+        "pred": 1.1365234963965558,
+        "mape": 1.8361369363134756,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1533043384552002,
+        "pred": 1.115131779505622,
+        "mape": 3.3098426561638288,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1521055698394775,
+        "pred": 1.0972484376600655,
+        "mape": 4.761467491825011,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.157781958580017,
+        "pred": 1.1341407299041748,
+        "mape": 2.0419413604300334,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1533043384552002,
+        "pred": 1.1172124147415161,
+        "mape": 3.1294362216678735,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1521055698394775,
+        "pred": 1.1015287637710571,
+        "mape": 4.389945452261571,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.3965532779693604,
+        "pred": 1.4187430200332454,
+        "mape": 1.5888933429127543,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.3392317295074463,
+        "pred": 1.3834766214799727,
+        "mape": 3.3037517703377,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.3022968769073486,
+        "pred": 1.3606464946311458,
+        "mape": 4.480515830028246,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.3965532779693604,
+        "pred": 1.4477554559707642,
+        "mape": 3.6663247159359114,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.3392317295074463,
+        "pred": 1.4350290298461914,
+        "mape": 7.15315342580617,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.3022968769073486,
+        "pred": 1.4139831066131592,
+        "mape": 8.576095949107955,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.3392317295074463,
+        "pred": 1.3361513520210564,
+        "mape": 0.2300107904046466,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.3022968769073486,
+        "pred": 1.2849877975150175,
+        "mape": 1.3291193198156321,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.267974853515625,
+        "pred": 1.2439916626012573,
+        "mape": 1.891456352456141,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.3392317295074463,
+        "pred": 1.346649408340454,
+        "mape": 0.5538756788368469,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.3022968769073486,
+        "pred": 1.3263823986053467,
+        "mape": 1.8494647514778308,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.267974853515625,
+        "pred": 1.298624873161316,
+        "mape": 2.4172419161712675,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.3022968769073486,
+        "pred": 1.2889755172240251,
+        "mape": 1.0229126645038578,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.267974853515625,
+        "pred": 1.2495516360989802,
+        "mape": 1.4529639421132055,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2471219301223755,
+        "pred": 1.2172159554063038,
+        "mape": 2.3979992648463124,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.3022968769073486,
+        "pred": 1.2921017408370972,
+        "mape": 0.7828580603266542,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.267974853515625,
+        "pred": 1.2670137882232666,
+        "mape": 0.07579529591566583,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2471219301223755,
+        "pred": 1.240349531173706,
+        "mape": 0.5430422467196037,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.267974853515625,
+        "pred": 1.261701446960973,
+        "mape": 0.49475796284587836,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2471219301223755,
+        "pred": 1.2328699146514994,
+        "mape": 1.1427924669304443,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.238189697265625,
+        "pred": 1.2090675899347294,
+        "mape": 2.3519907648406253,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.267974853515625,
+        "pred": 1.2634226083755493,
+        "mape": 0.3590169889768707,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2471219301223755,
+        "pred": 1.2417912483215332,
+        "mape": 0.427438702831503,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.238189697265625,
+        "pred": 1.2214857339859009,
+        "mape": 1.3490633395361447,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2471219301223755,
+        "pred": 1.23748527559492,
+        "mape": 0.7727114963418161,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.238189697265625,
+        "pred": 1.2148460675439998,
+        "mape": 1.8853031787598007,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2352460622787476,
+        "pred": 1.1959094668455412,
+        "mape": 3.1845149427668913,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2471219301223755,
+        "pred": 1.2375458478927612,
+        "mape": 0.7678545295626862,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.238189697265625,
+        "pred": 1.2206499576568604,
+        "mape": 1.4165632008971483,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2352460622787476,
+        "pred": 1.2058911323547363,
+        "mape": 2.376443918376722,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2871477603912354,
+        "pred": 1.333194103905968,
+        "mape": 3.577393748541866,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.238710880279541,
+        "pred": 1.289835371912683,
+        "mape": 4.127233598013171,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1946178674697876,
+        "pred": 1.2605657657957736,
+        "mape": 5.520417877698776,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2871477603912354,
+        "pred": 1.3417291641235352,
+        "mape": 4.240492460299158,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.238710880279541,
+        "pred": 1.3284624814987183,
+        "mape": 7.245564937552088,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1946178674697876,
+        "pred": 1.3061240911483765,
+        "mape": 9.334049549648888,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.238710880279541,
+        "pred": 1.2455283652271762,
+        "mape": 0.5503693441440286,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1946178674697876,
+        "pred": 1.2028580263647868,
+        "mape": 0.6897736187766822,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1676223278045654,
+        "pred": 1.1712141987983444,
+        "mape": 0.3076226711536645,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.238710880279541,
+        "pred": 1.233643889427185,
+        "mape": 0.40905355180318465,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1946178674697876,
+        "pred": 1.212310791015625,
+        "mape": 1.4810529816795046,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1676223278045654,
+        "pred": 1.1818768978118896,
+        "mape": 1.2208202659267855,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1946178674697876,
+        "pred": 1.1867592247292618,
+        "mape": 0.6578373682933871,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1676223278045654,
+        "pred": 1.1491239027463853,
+        "mape": 1.5842815452974401,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1458327770233154,
+        "pred": 1.1186098973207141,
+        "mape": 2.375816109338558,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1946178674697876,
+        "pred": 1.190212368965149,
+        "mape": 0.3687788894342892,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1676223278045654,
+        "pred": 1.1639890670776367,
+        "mape": 0.3111674588957363,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1458327770233154,
+        "pred": 1.1388849020004272,
+        "mape": 0.606360296389637,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1676223278045654,
+        "pred": 1.1593605851520454,
+        "mape": 0.7075697728437782,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1458327770233154,
+        "pred": 1.1327819799250882,
+        "mape": 1.1389792088275765,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1406923532485962,
+        "pred": 1.1112299233070306,
+        "mape": 2.5828550404198842,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1676223278045654,
+        "pred": 1.1574150323867798,
+        "mape": 0.874194949404404,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1458327770233154,
+        "pred": 1.136311411857605,
+        "mape": 0.8309559088059416,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1406923532485962,
+        "pred": 1.1167082786560059,
+        "mape": 2.102589232257558,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1458327770233154,
+        "pred": 1.1424877633296218,
+        "mape": 0.29192860954662686,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1406923532485962,
+        "pred": 1.1243573230495212,
+        "mape": 1.4320276762226214,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.138353705406189,
+        "pred": 1.1098059962610578,
+        "mape": 2.507806581518064,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1458327770233154,
+        "pred": 1.137001395225525,
+        "mape": 0.7707391492790947,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1406923532485962,
+        "pred": 1.1206610202789307,
+        "mape": 1.7560679628138096,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.138353705406189,
+        "pred": 1.1061843633651733,
+        "mape": 2.82595311881002,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.4075021743774414,
+        "pred": 1.4412017149009912,
+        "mape": 2.3942798197420645,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.3263590335845947,
+        "pred": 1.3943260449599117,
+        "mape": 5.124329812240247,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2782180309295654,
+        "pred": 1.3639624680885123,
+        "mape": 6.708122955877134,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.4075021743774414,
+        "pred": 1.4752458333969116,
+        "mape": 4.813041162755874,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.3263590335845947,
+        "pred": 1.4580668210983276,
+        "mape": 9.930025293210523,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2782180309295654,
+        "pred": 1.429862141609192,
+        "mape": 11.86371237224259,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.3263590335845947,
+        "pred": 1.3563754428170478,
+        "mape": 2.2630681793097347,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2782180309295654,
+        "pred": 1.3038639607220182,
+        "mape": 2.0063814757645138,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2322170734405518,
+        "pred": 1.2650277524643674,
+        "mape": 2.662735302977327,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.3263590335845947,
+        "pred": 1.3407808542251587,
+        "mape": 1.0873240408811333,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2782180309295654,
+        "pred": 1.311786413192749,
+        "mape": 2.626185944096836,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2322170734405518,
+        "pred": 1.2745567560195923,
+        "mape": 3.4360571275661034,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2782180309295654,
+        "pred": 1.260633121658922,
+        "mape": 1.3757362863873168,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2322170734405518,
+        "pred": 1.20749436203838,
+        "mape": 2.0063600752700084,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2025121450424194,
+        "pred": 1.1637161134774872,
+        "mape": 3.2262486266667785,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2782180309295654,
+        "pred": 1.2607064247131348,
+        "mape": 1.3700015015197058,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2322170734405518,
+        "pred": 1.2243353128433228,
+        "mape": 0.639640593132007,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2025121450424194,
+        "pred": 1.1894564628601074,
+        "mape": 1.08570065060353,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2322170734405518,
+        "pred": 1.2249336662029786,
+        "mape": 0.5910815062184361,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2025121450424194,
+        "pred": 1.186478576201468,
+        "mape": 1.333339451668143,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1964805126190186,
+        "pred": 1.1546448788920136,
+        "mape": 3.4965578867163862,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2322170734405518,
+        "pred": 1.2216777801513672,
+        "mape": 0.8553114152003379,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2025121450424194,
+        "pred": 1.1934036016464233,
+        "mape": 0.757459576067299,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1964805126190186,
+        "pred": 1.1675037145614624,
+        "mape": 2.421836189720116,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2025121450424194,
+        "pred": 1.1952425236349682,
+        "mape": 0.6045362150745515,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1964805126190186,
+        "pred": 1.1664337995634133,
+        "mape": 2.511258038782005,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1911909580230713,
+        "pred": 1.14248627344376,
+        "mape": 4.088738606624648,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2025121450424194,
+        "pred": 1.1895555257797241,
+        "mape": 1.0774626531724767,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1964805126190186,
+        "pred": 1.1679588556289673,
+        "mape": 2.383796199707357,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1911909580230713,
+        "pred": 1.1484501361846924,
+        "mape": 3.5880747373462762,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1835854053497314,
+        "pred": 1.240682826123971,
+        "mape": 4.824106525491349,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1333833932876587,
+        "pred": 1.2040362462299545,
+        "mape": 6.233799909256636,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0974239110946655,
+        "pred": 1.1799744661643268,
+        "mape": 7.5222121766344765,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1835854053497314,
+        "pred": 1.2439242601394653,
+        "mape": 5.097972188319159,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1333833932876587,
+        "pred": 1.2320164442062378,
+        "mape": 8.70253186192093,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0974239110946655,
+        "pred": 1.2109662294387817,
+        "mape": 10.34625883364062,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1333833932876587,
+        "pred": 1.1235251084737574,
+        "mape": 0.8698102400552105,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0974239110946655,
+        "pred": 1.0712888345069569,
+        "mape": 2.3814932701474723,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0621910095214844,
+        "pred": 1.0293822637294647,
+        "mape": 3.0887802191811002,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1333833932876587,
+        "pred": 1.1352554559707642,
+        "mape": 0.16517470559323164,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0974239110946655,
+        "pred": 1.1134463548660278,
+        "mape": 1.460004981610081,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0621910095214844,
+        "pred": 1.0837998390197754,
+        "mape": 2.034363810707244,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.0974239110946655,
+        "pred": 1.082709677734014,
+        "mape": 1.3407975907846164,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0621910095214844,
+        "pred": 1.044692222643448,
+        "mape": 1.6474237421685087,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.045780062675476,
+        "pred": 1.0136654650813675,
+        "mape": 3.0708749134065623,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.0974239110946655,
+        "pred": 1.0847641229629517,
+        "mape": 1.1535914247654673,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0621910095214844,
+        "pred": 1.0590494871139526,
+        "mape": 0.29575870812039634,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.045780062675476,
+        "pred": 1.0332897901535034,
+        "mape": 1.1943498415927065,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.0621910095214844,
+        "pred": 1.0784269815804057,
+        "mape": 1.528536008437469,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.045780062675476,
+        "pred": 1.0574715829009818,
+        "mape": 1.1179712295905344,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0358625650405884,
+        "pred": 1.0411054017028223,
+        "mape": 0.5061324580282015,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.0621910095214844,
+        "pred": 1.0588995218276978,
+        "mape": 0.30987719386454154,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.045780062675476,
+        "pred": 1.037660002708435,
+        "mape": 0.7764596263450485,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0358625650405884,
+        "pred": 1.0190647840499878,
+        "mape": 1.621622554720123,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.045780062675476,
+        "pred": 1.035595528470155,
+        "mape": 0.9738696088033475,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0358625650405884,
+        "pred": 1.0148273531366119,
+        "mape": 2.030695249919788,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0364305973052979,
+        "pred": 0.9975238049127924,
+        "mape": 3.7539216319609343,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.045780062675476,
+        "pred": 1.032759666442871,
+        "mape": 1.2450415433713846,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0358625650405884,
+        "pred": 1.016879677772522,
+        "mape": 1.8325681329475012,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0364305973052979,
+        "pred": 1.0032376050949097,
+        "mape": 3.202625655464959,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1730693578720093,
+        "pred": 1.2311542786240015,
+        "mape": 4.951533373726546,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1072214841842651,
+        "pred": 1.1872060012657997,
+        "mape": 7.223894968084219,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0587522983551025,
+        "pred": 1.1589523820504133,
+        "mape": 9.463977915418317,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1730693578720093,
+        "pred": 1.2315016984939575,
+        "mape": 4.981149684784763,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1072214841842651,
+        "pred": 1.2166941165924072,
+        "mape": 9.887148503878157,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0587522983551025,
+        "pred": 1.1893388032913208,
+        "mape": 12.333999665370257,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1072214841842651,
+        "pred": 1.105813250257089,
+        "mape": 0.1271862899421296,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0587522983551025,
+        "pred": 1.0494198563202026,
+        "mape": 0.8814566022098814,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0229768753051758,
+        "pred": 1.0051997263806194,
+        "mape": 1.7377860002214707,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1072214841842651,
+        "pred": 1.1090738773345947,
+        "mape": 0.16730104832587517,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0587522983551025,
+        "pred": 1.0810143947601318,
+        "mape": 2.102672781878831,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0229768753051758,
+        "pred": 1.0456162691116333,
+        "mape": 2.2130894991838117,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.0587522983551025,
+        "pred": 1.0534279700631992,
+        "mape": 0.5028870586798537,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0229768753051758,
+        "pred": 1.011726679066911,
+        "mape": 1.0997507871239571,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 0.9967988729476929,
+        "pred": 0.9782900661882561,
+        "mape": 1.8568246074258985,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.0587522983551025,
+        "pred": 1.0473580360412598,
+        "mape": 1.0761971739324783,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0229768753051758,
+        "pred": 1.0141533613204956,
+        "mape": 0.8625330833649523,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 0.9967988729476929,
+        "pred": 0.9839584231376648,
+        "mape": 1.2881685722674248,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.0229768753051758,
+        "pred": 1.0195942854682636,
+        "mape": 0.33066141753234635,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 0.9967988729476929,
+        "pred": 0.989447008329294,
+        "mape": 0.7375474449181749,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 0.9899071455001831,
+        "pred": 0.9650096670609379,
+        "mape": 2.5151327124388922,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.0229768753051758,
+        "pred": 1.009134292602539,
+        "mape": 1.3531667271078032,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 0.9967988729476929,
+        "pred": 0.9829240441322327,
+        "mape": 1.391938654026577,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 0.9899071455001831,
+        "pred": 0.9601791501045227,
+        "mape": 3.003109486661939,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 0.9967988729476929,
+        "pred": 0.9953529836328925,
+        "mape": 0.14505326541197436,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 0.9899071455001831,
+        "pred": 0.9732411565962629,
+        "mape": 1.6835911307114768,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 0.9879242181777954,
+        "pred": 0.9551393539699675,
+        "mape": 3.318560634974498,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 0.9967988729476929,
+        "pred": 0.9827377200126648,
+        "mape": 1.4106309022448038,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 0.9899071455001831,
+        "pred": 0.9636709690093994,
+        "mape": 2.6503674218380353,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 0.9879242181777954,
+        "pred": 0.9470043778419495,
+        "mape": 4.142001945384202,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.4136420488357544,
+        "pred": 1.503190594939378,
+        "mape": 6.334598364371935,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.3518778085708618,
+        "pred": 1.469247550901651,
+        "mape": 8.681978621637896,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.302024006843567,
+        "pred": 1.4486151908734555,
+        "mape": 11.25871591148787,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.4136420488357544,
+        "pred": 1.4793140888214111,
+        "mape": 4.645591862504574,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.3518778085708618,
+        "pred": 1.4647268056869507,
+        "mape": 8.347573752644644,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.302024006843567,
+        "pred": 1.4394359588623047,
+        "mape": 10.553718771427176,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.3518778085708618,
+        "pred": 1.3768164868050208,
+        "mape": 1.8447435172061073,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.302024006843567,
+        "pred": 1.33462746508026,
+        "mape": 2.504059684408751,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2651256322860718,
+        "pred": 1.3044739408932495,
+        "mape": 3.1102293403126833,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.3518778085708618,
+        "pred": 1.353936791419983,
+        "mape": 0.1523053959512619,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.302024006843567,
+        "pred": 1.3268848657608032,
+        "mape": 1.9094009623912613,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2651256322860718,
+        "pred": 1.2921955585479736,
+        "mape": 2.1397026169635596,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.302024006843567,
+        "pred": 1.297487726427299,
+        "mape": 0.3484022101301296,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2651256322860718,
+        "pred": 1.2557468708873623,
+        "mape": 0.7413304386033328,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2361098527908325,
+        "pred": 1.2223251164414601,
+        "mape": 1.1151708174034722,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.302024006843567,
+        "pred": 1.2951643466949463,
+        "mape": 0.5268459039591862,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2651256322860718,
+        "pred": 1.2630761861801147,
+        "mape": 0.16199546145102592,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2361098527908325,
+        "pred": 1.232058048248291,
+        "mape": 0.32778676857833666,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2651256322860718,
+        "pred": 1.259982546322708,
+        "mape": 0.4065276864298738,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2361098527908325,
+        "pred": 1.2277748661042929,
+        "mape": 0.6742917441941988,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2273521423339844,
+        "pred": 1.2014127947327373,
+        "mape": 2.113439713554392,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2651256322860718,
+        "pred": 1.255763053894043,
+        "mape": 0.7400512765764381,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2361098527908325,
+        "pred": 1.2296481132507324,
+        "mape": 0.5227480005527888,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2273521423339844,
+        "pred": 1.2066816091537476,
+        "mape": 1.6841566871695732,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2361098527908325,
+        "pred": 1.2315277939629379,
+        "mape": 0.3706837881398225,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2273521423339844,
+        "pred": 1.206040102729339,
+        "mape": 1.7364241988544111,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2221612930297852,
+        "pred": 1.184802574116368,
+        "mape": 3.056774840316169,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2361098527908325,
+        "pred": 1.2272855043411255,
+        "mape": 0.7138806012899112,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2273521423339844,
+        "pred": 1.2076977491378784,
+        "mape": 1.6013654531722523,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2221612930297852,
+        "pred": 1.189984679222107,
+        "mape": 2.632763285107087,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2569283246994019,
+        "pred": 1.338611672044283,
+        "mape": 6.498647992869129,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2005165815353394,
+        "pred": 1.3114840987952705,
+        "mape": 9.243314000545908,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1454106569290161,
+        "pred": 1.2953251593871347,
+        "mape": 13.088275506363576,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2569283246994019,
+        "pred": 1.313868522644043,
+        "mape": 4.530106993830259,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2005165815353394,
+        "pred": 1.3015713691711426,
+        "mape": 8.417608651982496,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1454106569290161,
+        "pred": 1.2800133228302002,
+        "mape": 11.75147665048534,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2005165815353394,
+        "pred": 1.2052952408772881,
+        "mape": 0.39805025731817406,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1454106569290161,
+        "pred": 1.1600092510147064,
+        "mape": 1.2745292701249085,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1067901849746704,
+        "pred": 1.1252546707966493,
+        "mape": 1.668291431623192,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2005165815353394,
+        "pred": 1.2058383226394653,
+        "mape": 0.4432875968543481,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1454106569290161,
+        "pred": 1.1825798749923706,
+        "mape": 3.2450560712443206,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1067901849746704,
+        "pred": 1.15261971950531,
+        "mape": 4.140760837311589,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1454106569290161,
+        "pred": 1.156451672298217,
+        "mape": 0.9639351006915869,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1067901849746704,
+        "pred": 1.12127538129183,
+        "mape": 1.3087572074458722,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0882658958435059,
+        "pred": 1.0932558531270757,
+        "mape": 0.4585237213284355,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1454106569290161,
+        "pred": 1.1518633365631104,
+        "mape": 0.5633507594031515,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1067901849746704,
+        "pred": 1.123529076576233,
+        "mape": 1.5123816445793274,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0882658958435059,
+        "pred": 1.0961034297943115,
+        "mape": 0.7201855705246425,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1067901849746704,
+        "pred": 1.1138060468935025,
+        "mape": 0.6338926757823246,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0882658958435059,
+        "pred": 1.0845324882446876,
+        "mape": 0.34306024043182076,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.081602931022644,
+        "pred": 1.0604487511497376,
+        "mape": 1.9558175432185092,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1067901849746704,
+        "pred": 1.1051017045974731,
+        "mape": 0.15255650078211594,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0882658958435059,
+        "pred": 1.080730676651001,
+        "mape": 0.6924060766109368,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.081602931022644,
+        "pred": 1.0579047203063965,
+        "mape": 2.1910268580578967,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.0882658958435059,
+        "pred": 1.0809621108719383,
+        "mape": 0.671139746220429,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.081602931022644,
+        "pred": 1.0564339295228815,
+        "mape": 2.3270093652543555,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0796386003494263,
+        "pred": 1.0357746473149414,
+        "mape": 4.062836677040655,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.0882658958435059,
+        "pred": 1.0704705715179443,
+        "mape": 1.6352000364551087,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.081602931022644,
+        "pred": 1.0498772859573364,
+        "mape": 2.9332062770310134,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0796386003494263,
+        "pred": 1.030259132385254,
+        "mape": 4.5737034548589355,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.301532506942749,
+        "pred": 1.34379192596721,
+        "mape": 3.246896931043754,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2561286687850952,
+        "pred": 1.3017373397494865,
+        "mape": 3.630891651291036,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.219542145729065,
+        "pred": 1.2733941506436208,
+        "mape": 4.415755954244792,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.301532506942749,
+        "pred": 1.3510295152664185,
+        "mape": 3.802979031229581,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2561286687850952,
+        "pred": 1.3379634618759155,
+        "mape": 6.514841602171968,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.219542145729065,
+        "pred": 1.3162178993225098,
+        "mape": 7.927217106191132,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2561286687850952,
+        "pred": 1.2630839065483943,
+        "mape": 0.5537042451253081,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.219542145729065,
+        "pred": 1.2236508238014372,
+        "mape": 0.33690332775797655,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1973745822906494,
+        "pred": 1.1947094772605136,
+        "mape": 0.22257905500527106,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2561286687850952,
+        "pred": 1.2486549615859985,
+        "mape": 0.5949794304372588,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.219542145729065,
+        "pred": 1.2284189462661743,
+        "mape": 0.7278797676813915,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1973745822906494,
+        "pred": 1.199554681777954,
+        "mape": 0.18207330601039037,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.219542145729065,
+        "pred": 1.207692937253893,
+        "mape": 0.9716112326801413,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1973745822906494,
+        "pred": 1.173160507105432,
+        "mape": 2.022264005211666,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1713892221450806,
+        "pred": 1.1454692757171676,
+        "mape": 2.212752681849644,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.219542145729065,
+        "pred": 1.2099708318710327,
+        "mape": 0.7848284613657462,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1973745822906494,
+        "pred": 1.1857141256332397,
+        "mape": 0.9738353252081329,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1713892221450806,
+        "pred": 1.160835862159729,
+        "mape": 0.9009268470155425,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1973745822906494,
+        "pred": 1.1859246834039578,
+        "mape": 0.9562503711066944,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1713892221450806,
+        "pred": 1.162697320370717,
+        "mape": 0.7420165398522942,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1621534824371338,
+        "pred": 1.144210122217979,
+        "mape": 1.54397508507448,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1973745822906494,
+        "pred": 1.1844345331192017,
+        "mape": 1.0807018424169872,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1713892221450806,
+        "pred": 1.1644933223724365,
+        "mape": 0.5886941455732433,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1621534824371338,
+        "pred": 1.1472917795181274,
+        "mape": 1.2788072439313354,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1713892221450806,
+        "pred": 1.1734755408455086,
+        "mape": 0.178106359610135,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1621534824371338,
+        "pred": 1.158402338106831,
+        "mape": 0.32277529491512724,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1633541584014893,
+        "pred": 1.146512542280684,
+        "mape": 1.447677476302352,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1713892221450806,
+        "pred": 1.168677568435669,
+        "mape": 0.23149040969029622,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1621534824371338,
+        "pred": 1.1550060510635376,
+        "mape": 0.6150161301076538,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1633541584014893,
+        "pred": 1.1431636810302734,
+        "mape": 1.7355400524771076,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.413832426071167,
+        "pred": 1.4694965612824498,
+        "mape": 3.9371098147724086,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.3274368047714233,
+        "pred": 1.418427095169094,
+        "mape": 6.85458547409635,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.274893879890442,
+        "pred": 1.385617829438046,
+        "mape": 8.684954198471726,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.413832426071167,
+        "pred": 1.5024813413619995,
+        "mape": 6.270114736098878,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.3274368047714233,
+        "pred": 1.4844129085540771,
+        "mape": 11.825504854047207,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.274893879890442,
+        "pred": 1.4524410963058472,
+        "mape": 13.926430992880977,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.3274368047714233,
+        "pred": 1.320262413513404,
+        "mape": 0.5404695147995928,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.274893879890442,
+        "pred": 1.2391244009772957,
+        "mape": 2.805682847596699,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.226668119430542,
+        "pred": 1.1735138614884915,
+        "mape": 4.333222417708745,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.3274368047714233,
+        "pred": 1.339367151260376,
+        "mape": 0.8987506181890874,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.274893879890442,
+        "pred": 1.3035515546798706,
+        "mape": 2.2478478594541067,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.226668119430542,
+        "pred": 1.259096384048462,
+        "mape": 2.6436053977643232,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.274893879890442,
+        "pred": 1.2475767461252867,
+        "mape": 2.1426986352387787,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.226668119430542,
+        "pred": 1.1848660327290195,
+        "mape": 3.407774771299051,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1920514106750488,
+        "pred": 1.132940608665302,
+        "mape": 4.958746030615649,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.274893879890442,
+        "pred": 1.2490640878677368,
+        "mape": 2.0260346708170536,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.226668119430542,
+        "pred": 1.2058324813842773,
+        "mape": 1.6985554377933298,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1920514106750488,
+        "pred": 1.1675488948822021,
+        "mape": 2.0554915311052824,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.226668119430542,
+        "pred": 1.2126065216421842,
+        "mape": 1.1463245490463747,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1920514106750488,
+        "pred": 1.169267869664417,
+        "mape": 1.9112884567394386,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1826715469360352,
+        "pred": 1.133478754725116,
+        "mape": 4.15946357535731,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.226668119430542,
+        "pred": 1.2089017629623413,
+        "mape": 1.448342562000257,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1920514106750488,
+        "pred": 1.1763979196548462,
+        "mape": 1.3131556978182841,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1826715469360352,
+        "pred": 1.1487700939178467,
+        "mape": 2.8665146384909215,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1920514106750488,
+        "pred": 1.1928033528475654,
+        "mape": 0.06307967641184191,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1826715469360352,
+        "pred": 1.1664502836673432,
+        "mape": 1.3715780438547513,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1787790060043335,
+        "pred": 1.1455258075327672,
+        "mape": 2.820986656717232,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1920514106750488,
+        "pred": 1.1773661375045776,
+        "mape": 1.23193287126392,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1826715469360352,
+        "pred": 1.1551183462142944,
+        "mape": 2.329742420296084,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1787790060043335,
+        "pred": 1.1363927125930786,
+        "mape": 3.595779462931753,
+        "difficulty": "Hard"
+      }
+    ]
+  },
+  "run_15_epoch": {
+    "config": {
+      "num_runs": 10,
+      "epochs_trained_per_run": 15,
+      "cutoffs_tested": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        9
+      ],
+      "horizons_tested": [
+        1,
+        2,
+        3
+      ],
+      "model_name": "Qwen/Qwen2.5-1.5B-Instruct",
+      "train_size": 40,
+      "val_size": 10,
+      "lcpfn_available": true
+    },
+    "aggregate_mape_by_arm": {
+      "A_domhan": {
+        "mean": 3.6608,
+        "std": 2.5962,
+        "count": 180
+      },
+      "B_lcpfn": {
+        "mean": 4.4677,
+        "std": 3.1716,
+        "count": 180
+      }
+    },
+    "mape_by_cutoff": {
+      "A_domhan": {
+        "3": {
+          "mean": 4.8441,
+          "std": 3.124,
+          "count": 30
+        },
+        "4": {
+          "mean": 1.3876,
+          "std": 1.1295,
+          "count": 30
+        },
+        "5": {
+          "mean": 2.4703,
+          "std": 2.1599,
+          "count": 30
+        },
+        "6": {
+          "mean": 5.0425,
+          "std": 2.7822,
+          "count": 30
+        },
+        "7": {
+          "mean": 4.9084,
+          "std": 2.1582,
+          "count": 30
+        },
+        "9": {
+          "mean": 3.3123,
+          "std": 1.238,
+          "count": 30
+        }
+      },
+      "B_lcpfn": {
+        "3": {
+          "mean": 8.2788,
+          "std": 3.6994,
+          "count": 30
+        },
+        "4": {
+          "mean": 1.7416,
+          "std": 1.4475,
+          "count": 30
+        },
+        "5": {
+          "mean": 1.9458,
+          "std": 1.7533,
+          "count": 30
+        },
+        "6": {
+          "mean": 5.449,
+          "std": 2.5045,
+          "count": 30
+        },
+        "7": {
+          "mean": 5.5916,
+          "std": 1.9619,
+          "count": 30
+        },
+        "9": {
+          "mean": 3.7998,
+          "std": 1.0267,
+          "count": 30
+        }
+      }
+    },
+    "mape_by_run_mean_across_cutoffs_horizons": {
+      "A_domhan": {
+        "run_0": 2.9318,
+        "run_1": 3.0397,
+        "run_2": 2.6518,
+        "run_3": 4.3181,
+        "run_4": 3.2536,
+        "run_5": 5.0192,
+        "run_6": 4.1392,
+        "run_7": 3.7777,
+        "run_8": 2.6557,
+        "run_9": 4.8215
+      },
+      "B_lcpfn": {
+        "run_0": 3.4613,
+        "run_1": 3.4525,
+        "run_2": 3.5833,
+        "run_3": 5.4364,
+        "run_4": 4.6409,
+        "run_5": 5.8589,
+        "run_6": 4.5698,
+        "run_7": 4.3365,
+        "run_8": 3.314,
+        "run_9": 6.024
+      }
+    },
+    "head_to_head_case_level": {
+      "arm_a_wins": 117,
+      "arm_b_wins": 63,
+      "ties": 0,
+      "total_cases": 180
+    },
+    "paired_run_level_test": {
+      "n_runs": 10,
+      "arm_a_wins": 10,
+      "arm_b_wins": 0,
+      "wilcoxon_p": 0.00195,
+      "paired_ttest_p": 4e-05,
+      "mean_gap_B_minus_A": 0.8069
+    },
+    "arm_c_fixed_budget": {
+      "3": {
+        "mean_final_metric": 1.4043,
+        "std": 0.094
+      },
+      "4": {
+        "mean_final_metric": 1.2782,
+        "std": 0.0837
+      },
+      "5": {
+        "mean_final_metric": 1.21,
+        "std": 0.0809
+      },
+      "6": {
+        "mean_final_metric": 1.1489,
+        "std": 0.0757
+      },
+      "7": {
+        "mean_final_metric": 1.1357,
+        "std": 0.0739
+      },
+      "9": {
+        "mean_final_metric": 1.1341,
+        "std": 0.0731
+      }
+    },
+    "difficulty_labels": {
+      "run_2": "Easy",
+      "run_4": "Easy",
+      "run_1": "Easy",
+      "run_8": "Easy",
+      "run_0": "Medium",
+      "run_7": "Medium",
+      "run_9": "Medium",
+      "run_3": "Hard",
+      "run_5": "Hard",
+      "run_6": "Hard"
+    },
+    "difficulty_scores": {
+      "run_2": 0.0749,
+      "run_4": 0.0777,
+      "run_1": 0.0789,
+      "run_8": 0.0812,
+      "run_0": 0.0827,
+      "run_7": 0.0973,
+      "run_9": 0.0974,
+      "run_3": 0.1032,
+      "run_5": 0.1043,
+      "run_6": 0.1202
+    },
+    "all_cases": [
+      {
+        "curve": "run_0",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2763,
+        "pred": 1.3105,
+        "mape": 2.6798,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2763,
+        "pred": 1.3289,
+        "mape": 4.1257,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2191,
+        "pred": 1.2792,
+        "mape": 4.9251,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2191,
+        "pred": 1.3167,
+        "mape": 8.0067,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1705,
+        "pred": 1.2595,
+        "mape": 7.5976,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1705,
+        "pred": 1.2965,
+        "mape": 10.763,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2191,
+        "pred": 1.2202,
+        "mape": 0.0861,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2191,
+        "pred": 1.2269,
+        "mape": 0.6395,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1705,
+        "pred": 1.1722,
+        "mape": 0.1413,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1705,
+        "pred": 1.2072,
+        "mape": 3.1335,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1523,
+        "pred": 1.1342,
+        "mape": 1.5693,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1523,
+        "pred": 1.1792,
+        "mape": 2.3397,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1705,
+        "pred": 1.1719,
+        "mape": 0.1136,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1705,
+        "pred": 1.1734,
+        "mape": 0.246,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1523,
+        "pred": 1.1341,
+        "mape": 1.5737,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1523,
+        "pred": 1.1466,
+        "mape": 0.4955,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1453,
+        "pred": 1.1033,
+        "mape": 3.6679,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1453,
+        "pred": 1.1205,
+        "mape": 2.1692,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1523,
+        "pred": 1.1339,
+        "mape": 1.5976,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1523,
+        "pred": 1.132,
+        "mape": 1.7549,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1453,
+        "pred": 1.1033,
+        "mape": 3.6738,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1453,
+        "pred": 1.1083,
+        "mape": 3.2369,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1458,
+        "pred": 1.0777,
+        "mape": 5.9428,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1458,
+        "pred": 1.0858,
+        "mape": 5.2314,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1453,
+        "pred": 1.1189,
+        "mape": 2.3065,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1453,
+        "pred": 1.1166,
+        "mape": 2.5098,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1458,
+        "pred": 1.0974,
+        "mape": 4.2184,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1458,
+        "pred": 1.0991,
+        "mape": 4.0755,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1442,
+        "pred": 1.0795,
+        "mape": 5.6478,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1442,
+        "pred": 1.0836,
+        "mape": 5.2885,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1442,
+        "pred": 1.1246,
+        "mape": 1.7094,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1442,
+        "pred": 1.1208,
+        "mape": 2.0408,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1473,
+        "pred": 1.1187,
+        "mape": 2.4934,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1473,
+        "pred": 1.1141,
+        "mape": 2.9001,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1467,
+        "pred": 1.1143,
+        "mape": 2.8282,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_0",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1467,
+        "pred": 1.1083,
+        "mape": 3.3463,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.3588,
+        "pred": 1.3856,
+        "mape": 1.973,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.3588,
+        "pred": 1.4149,
+        "mape": 4.1293,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.3049,
+        "pred": 1.3474,
+        "mape": 3.2558,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.3049,
+        "pred": 1.4014,
+        "mape": 7.3925,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2484,
+        "pred": 1.3225,
+        "mape": 5.9372,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2484,
+        "pred": 1.379,
+        "mape": 10.4624,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.3049,
+        "pred": 1.2937,
+        "mape": 0.858,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.3049,
+        "pred": 1.3047,
+        "mape": 0.0153,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2484,
+        "pred": 1.2385,
+        "mape": 0.7908,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2484,
+        "pred": 1.2835,
+        "mape": 2.8101,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2345,
+        "pred": 1.1942,
+        "mape": 3.2677,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2345,
+        "pred": 1.2534,
+        "mape": 1.5307,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2484,
+        "pred": 1.2514,
+        "mape": 0.24,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2484,
+        "pred": 1.2555,
+        "mape": 0.5697,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2345,
+        "pred": 1.2113,
+        "mape": 1.8762,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2345,
+        "pred": 1.2285,
+        "mape": 0.4881,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.231,
+        "pred": 1.1787,
+        "mape": 4.2496,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.231,
+        "pred": 1.2012,
+        "mape": 2.4245,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2345,
+        "pred": 1.21,
+        "mape": 1.9879,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2345,
+        "pred": 1.2092,
+        "mape": 2.0496,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.231,
+        "pred": 1.1774,
+        "mape": 4.3542,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.231,
+        "pred": 1.185,
+        "mape": 3.7421,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2282,
+        "pred": 1.1503,
+        "mape": 6.3435,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2282,
+        "pred": 1.162,
+        "mape": 5.3899,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.231,
+        "pred": 1.1998,
+        "mape": 2.5392,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.231,
+        "pred": 1.196,
+        "mape": 2.8425,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2282,
+        "pred": 1.1795,
+        "mape": 3.9632,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2282,
+        "pred": 1.1789,
+        "mape": 4.0139,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2319,
+        "pred": 1.1631,
+        "mape": 5.5834,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2319,
+        "pred": 1.1635,
+        "mape": 5.5505,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2319,
+        "pred": 1.2074,
+        "mape": 1.9927,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2319,
+        "pred": 1.2032,
+        "mape": 2.3287,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2342,
+        "pred": 1.2018,
+        "mape": 2.6215,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2342,
+        "pred": 1.1968,
+        "mape": 3.0285,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2332,
+        "pred": 1.1977,
+        "mape": 2.8809,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_1",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2332,
+        "pred": 1.1915,
+        "mape": 3.3764,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2576,
+        "pred": 1.2678,
+        "mape": 0.8126,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2576,
+        "pred": 1.3007,
+        "mape": 3.4278,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1986,
+        "pred": 1.2192,
+        "mape": 1.7133,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1986,
+        "pred": 1.2847,
+        "mape": 7.185,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1505,
+        "pred": 1.1863,
+        "mape": 3.1132,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1505,
+        "pred": 1.2589,
+        "mape": 9.4247,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1986,
+        "pred": 1.1888,
+        "mape": 0.8205,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1986,
+        "pred": 1.1983,
+        "mape": 0.0293,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1505,
+        "pred": 1.134,
+        "mape": 1.4338,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1505,
+        "pred": 1.1756,
+        "mape": 2.1787,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1328,
+        "pred": 1.0902,
+        "mape": 3.7583,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1328,
+        "pred": 1.1447,
+        "mape": 1.0524,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1505,
+        "pred": 1.1689,
+        "mape": 1.6041,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1505,
+        "pred": 1.1477,
+        "mape": 0.245,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1328,
+        "pred": 1.1384,
+        "mape": 0.4992,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1328,
+        "pred": 1.121,
+        "mape": 1.037,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1338,
+        "pred": 1.1153,
+        "mape": 1.6323,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1338,
+        "pred": 1.0942,
+        "mape": 3.491,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1328,
+        "pred": 1.1116,
+        "mape": 1.8706,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1328,
+        "pred": 1.1098,
+        "mape": 2.0331,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1338,
+        "pred": 1.0811,
+        "mape": 4.6407,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1338,
+        "pred": 1.0862,
+        "mape": 4.1976,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1359,
+        "pred": 1.0559,
+        "mape": 7.0351,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1359,
+        "pred": 1.0654,
+        "mape": 6.1989,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1338,
+        "pred": 1.1104,
+        "mape": 2.0563,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1338,
+        "pred": 1.0962,
+        "mape": 3.3168,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1359,
+        "pred": 1.0962,
+        "mape": 3.4895,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1359,
+        "pred": 1.0801,
+        "mape": 4.9046,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1361,
+        "pred": 1.0855,
+        "mape": 4.4571,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1361,
+        "pred": 1.0665,
+        "mape": 6.1297,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1361,
+        "pred": 1.1113,
+        "mape": 2.1871,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1361,
+        "pred": 1.1091,
+        "mape": 2.3768,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1416,
+        "pred": 1.1062,
+        "mape": 3.1024,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1416,
+        "pred": 1.103,
+        "mape": 3.3831,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1425,
+        "pred": 1.1024,
+        "mape": 3.507,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_2",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1425,
+        "pred": 1.098,
+        "mape": 3.8873,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.3579,
+        "pred": 1.3834,
+        "mape": 1.8782,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.3579,
+        "pred": 1.4184,
+        "mape": 4.4547,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2753,
+        "pred": 1.3281,
+        "mape": 4.1463,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2753,
+        "pred": 1.4,
+        "mape": 9.7839,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1926,
+        "pred": 1.2917,
+        "mape": 8.3156,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1926,
+        "pred": 1.3681,
+        "mape": 14.7217,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2753,
+        "pred": 1.2663,
+        "mape": 0.7063,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2753,
+        "pred": 1.2822,
+        "mape": 0.5448,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1926,
+        "pred": 1.212,
+        "mape": 1.6304,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1926,
+        "pred": 1.2511,
+        "mape": 4.9035,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1789,
+        "pred": 1.1721,
+        "mape": 0.575,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1789,
+        "pred": 1.2106,
+        "mape": 2.6917,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1926,
+        "pred": 1.2378,
+        "mape": 3.7959,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1926,
+        "pred": 1.2055,
+        "mape": 1.0829,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1789,
+        "pred": 1.1968,
+        "mape": 1.5212,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1789,
+        "pred": 1.1676,
+        "mape": 0.9621,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1793,
+        "pred": 1.1655,
+        "mape": 1.1695,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1793,
+        "pred": 1.1321,
+        "mape": 4.0019,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1789,
+        "pred": 1.1421,
+        "mape": 3.1219,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1789,
+        "pred": 1.1326,
+        "mape": 3.9268,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1793,
+        "pred": 1.0957,
+        "mape": 7.0881,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1793,
+        "pred": 1.0971,
+        "mape": 6.9714,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1818,
+        "pred": 1.0566,
+        "mape": 10.5912,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1818,
+        "pred": 1.065,
+        "mape": 9.8814,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1793,
+        "pred": 1.1242,
+        "mape": 4.6732,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1793,
+        "pred": 1.1186,
+        "mape": 5.1513,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1818,
+        "pred": 1.0917,
+        "mape": 7.6236,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1818,
+        "pred": 1.0954,
+        "mape": 7.309,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1811,
+        "pred": 1.0642,
+        "mape": 9.8955,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1811,
+        "pred": 1.0752,
+        "mape": 8.9666,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1811,
+        "pred": 1.1456,
+        "mape": 3.0024,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1811,
+        "pred": 1.1394,
+        "mape": 3.5293,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1803,
+        "pred": 1.1379,
+        "mape": 3.5871,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1803,
+        "pred": 1.1322,
+        "mape": 4.0702,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1843,
+        "pred": 1.1322,
+        "mape": 4.4047,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_3",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1843,
+        "pred": 1.1263,
+        "mape": 4.9027,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1516,
+        "pred": 1.1822,
+        "mape": 2.6589,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1516,
+        "pred": 1.2034,
+        "mape": 4.5046,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0911,
+        "pred": 1.14,
+        "mape": 4.4806,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0911,
+        "pred": 1.1886,
+        "mape": 8.9339,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.043,
+        "pred": 1.1122,
+        "mape": 6.6328,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.043,
+        "pred": 1.1647,
+        "mape": 11.6682,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.0911,
+        "pred": 1.1079,
+        "mape": 1.5348,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.0911,
+        "pred": 1.0949,
+        "mape": 0.3451,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.043,
+        "pred": 1.0643,
+        "mape": 2.0353,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.043,
+        "pred": 1.0713,
+        "mape": 2.7087,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0376,
+        "pred": 1.0319,
+        "mape": 0.5472,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0376,
+        "pred": 1.0407,
+        "mape": 0.2961,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.043,
+        "pred": 1.0412,
+        "mape": 0.1717,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.043,
+        "pred": 1.038,
+        "mape": 0.4871,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0376,
+        "pred": 1.0032,
+        "mape": 3.3175,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0376,
+        "pred": 1.0096,
+        "mape": 2.7015,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0356,
+        "pred": 0.9727,
+        "mape": 6.0666,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0356,
+        "pred": 0.9824,
+        "mape": 5.1333,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.0376,
+        "pred": 1.0246,
+        "mape": 1.2582,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.0376,
+        "pred": 0.9993,
+        "mape": 3.6923,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0356,
+        "pred": 1.0001,
+        "mape": 3.4215,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0356,
+        "pred": 0.9761,
+        "mape": 5.739,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0363,
+        "pred": 0.9809,
+        "mape": 5.3418,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0363,
+        "pred": 0.9547,
+        "mape": 7.8672,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.0356,
+        "pred": 1.0121,
+        "mape": 2.2687,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.0356,
+        "pred": 0.9964,
+        "mape": 3.7773,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0363,
+        "pred": 1.0001,
+        "mape": 3.4942,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0363,
+        "pred": 0.9819,
+        "mape": 5.2487,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0454,
+        "pred": 0.9913,
+        "mape": 5.1737,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0454,
+        "pred": 0.9694,
+        "mape": 7.2721,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.0454,
+        "pred": 1.0186,
+        "mape": 2.5681,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.0454,
+        "pred": 1.0096,
+        "mape": 3.4299,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0527,
+        "pred": 1.0149,
+        "mape": 3.5907,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0527,
+        "pred": 1.0044,
+        "mape": 4.5865,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0545,
+        "pred": 1.0123,
+        "mape": 4.0026,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_4",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0545,
+        "pred": 1.0003,
+        "mape": 5.1439,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1371,
+        "pred": 1.1922,
+        "mape": 4.8478,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1371,
+        "pred": 1.1961,
+        "mape": 5.1851,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0614,
+        "pred": 1.1442,
+        "mape": 7.8012,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0614,
+        "pred": 1.1791,
+        "mape": 11.0826,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 0.9995,
+        "pred": 1.1135,
+        "mape": 11.4075,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 0.9995,
+        "pred": 1.1491,
+        "mape": 14.9688,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.0614,
+        "pred": 1.0677,
+        "mape": 0.5855,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.0614,
+        "pred": 1.0681,
+        "mape": 0.6259,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 0.9995,
+        "pred": 1.02,
+        "mape": 2.0564,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 0.9995,
+        "pred": 1.0379,
+        "mape": 3.8452,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 0.9884,
+        "pred": 0.9853,
+        "mape": 0.3163,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 0.9884,
+        "pred": 1.0014,
+        "mape": 1.3082,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 0.9995,
+        "pred": 1.008,
+        "mape": 0.8557,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 0.9995,
+        "pred": 0.9957,
+        "mape": 0.376,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 0.9884,
+        "pred": 0.9655,
+        "mape": 2.3183,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 0.9884,
+        "pred": 0.9601,
+        "mape": 2.8726,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 0.9851,
+        "pred": 0.932,
+        "mape": 5.3871,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 0.9851,
+        "pred": 0.928,
+        "mape": 5.7982,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 0.9884,
+        "pred": 0.9636,
+        "mape": 2.5104,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 0.9884,
+        "pred": 0.9424,
+        "mape": 4.6578,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 0.9851,
+        "pred": 0.9317,
+        "mape": 5.4211,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 0.9851,
+        "pred": 0.9114,
+        "mape": 7.4792,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 0.9883,
+        "pred": 0.9061,
+        "mape": 8.3193,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 0.9883,
+        "pred": 0.8853,
+        "mape": 10.4221,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 0.9851,
+        "pred": 0.9378,
+        "mape": 4.8014,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 0.9851,
+        "pred": 0.9342,
+        "mape": 5.1616,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 0.9883,
+        "pred": 0.9116,
+        "mape": 7.7637,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 0.9883,
+        "pred": 0.915,
+        "mape": 7.4176,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 0.9911,
+        "pred": 0.8954,
+        "mape": 9.6561,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 0.9911,
+        "pred": 0.8995,
+        "mape": 9.2416,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 0.9911,
+        "pred": 0.9508,
+        "mape": 4.0654,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 0.9911,
+        "pred": 0.9516,
+        "mape": 3.9904,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 0.9977,
+        "pred": 0.9414,
+        "mape": 5.6482,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 0.9977,
+        "pred": 0.9458,
+        "mape": 5.204,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 0.9993,
+        "pred": 0.9335,
+        "mape": 6.5845,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_5",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 0.9993,
+        "pred": 0.9412,
+        "mape": 5.8226,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.3756,
+        "pred": 1.453,
+        "mape": 5.6266,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.3756,
+        "pred": 1.4311,
+        "mape": 4.0309,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.3011,
+        "pred": 1.4125,
+        "mape": 8.5616,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.3011,
+        "pred": 1.4154,
+        "mape": 8.7861,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2272,
+        "pred": 1.3873,
+        "mape": 13.0497,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2272,
+        "pred": 1.3874,
+        "mape": 13.0534,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.3011,
+        "pred": 1.2988,
+        "mape": 0.1786,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.3011,
+        "pred": 1.3076,
+        "mape": 0.5022,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2272,
+        "pred": 1.2559,
+        "mape": 2.341,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2272,
+        "pred": 1.28,
+        "mape": 4.3048,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.214,
+        "pred": 1.2254,
+        "mape": 0.9465,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.214,
+        "pred": 1.2433,
+        "mape": 2.417,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2272,
+        "pred": 1.2463,
+        "mape": 1.5534,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2272,
+        "pred": 1.2393,
+        "mape": 0.9831,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.214,
+        "pred": 1.2021,
+        "mape": 0.9763,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.214,
+        "pred": 1.2058,
+        "mape": 0.675,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2073,
+        "pred": 1.1667,
+        "mape": 3.3631,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2073,
+        "pred": 1.1727,
+        "mape": 2.8682,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.214,
+        "pred": 1.1885,
+        "mape": 2.0958,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.214,
+        "pred": 1.1762,
+        "mape": 3.1107,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2073,
+        "pred": 1.1506,
+        "mape": 4.6956,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2073,
+        "pred": 1.1435,
+        "mape": 5.2845,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2051,
+        "pred": 1.1193,
+        "mape": 7.1239,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2051,
+        "pred": 1.1143,
+        "mape": 7.5351,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2073,
+        "pred": 1.1691,
+        "mape": 3.1677,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2073,
+        "pred": 1.1609,
+        "mape": 3.8465,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2051,
+        "pred": 1.1418,
+        "mape": 5.2581,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2051,
+        "pred": 1.1383,
+        "mape": 5.5446,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2049,
+        "pred": 1.119,
+        "mape": 7.1228,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2049,
+        "pred": 1.1185,
+        "mape": 7.1672,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2049,
+        "pred": 1.1804,
+        "mape": 2.0341,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2049,
+        "pred": 1.1673,
+        "mape": 3.1174,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2062,
+        "pred": 1.1734,
+        "mape": 2.7165,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2062,
+        "pred": 1.1586,
+        "mape": 3.9423,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.2129,
+        "pred": 1.1681,
+        "mape": 3.6945,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_6",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.2129,
+        "pred": 1.1512,
+        "mape": 5.0879,
+        "difficulty": "Hard"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2252,
+        "pred": 1.2706,
+        "mape": 3.7068,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2252,
+        "pred": 1.2596,
+        "mape": 2.8122,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1549,
+        "pred": 1.2253,
+        "mape": 6.0915,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1549,
+        "pred": 1.2438,
+        "mape": 7.6938,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0945,
+        "pred": 1.196,
+        "mape": 9.2715,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0945,
+        "pred": 1.2159,
+        "mape": 11.0882,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1549,
+        "pred": 1.1606,
+        "mape": 0.4874,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1549,
+        "pred": 1.1602,
+        "mape": 0.4558,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0945,
+        "pred": 1.1106,
+        "mape": 1.4693,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0945,
+        "pred": 1.1364,
+        "mape": 3.8238,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0811,
+        "pred": 1.0719,
+        "mape": 0.8494,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0811,
+        "pred": 1.1044,
+        "mape": 2.1516,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.0945,
+        "pred": 1.1058,
+        "mape": 1.0319,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.0945,
+        "pred": 1.1005,
+        "mape": 0.5475,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0811,
+        "pred": 1.0662,
+        "mape": 1.3764,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0811,
+        "pred": 1.0716,
+        "mape": 0.8813,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0778,
+        "pred": 1.0344,
+        "mape": 4.025,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0778,
+        "pred": 1.0428,
+        "mape": 3.2462,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.0811,
+        "pred": 1.0586,
+        "mape": 2.0785,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.0811,
+        "pred": 1.0489,
+        "mape": 2.9815,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0778,
+        "pred": 1.0257,
+        "mape": 4.8335,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0778,
+        "pred": 1.021,
+        "mape": 5.2681,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0779,
+        "pred": 0.9983,
+        "mape": 7.3829,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0779,
+        "pred": 0.9956,
+        "mape": 7.6336,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.0778,
+        "pred": 1.0405,
+        "mape": 3.4534,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.0778,
+        "pred": 1.0361,
+        "mape": 3.8642,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0779,
+        "pred": 1.0161,
+        "mape": 5.7389,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0779,
+        "pred": 1.0167,
+        "mape": 5.6847,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0775,
+        "pred": 0.9955,
+        "mape": 7.6087,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0775,
+        "pred": 0.9999,
+        "mape": 7.2031,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.0775,
+        "pred": 1.0575,
+        "mape": 1.8569,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.0775,
+        "pred": 1.0446,
+        "mape": 3.0542,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.0832,
+        "pred": 1.0522,
+        "mape": 2.8552,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.0832,
+        "pred": 1.0374,
+        "mape": 4.223,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.0907,
+        "pred": 1.0483,
+        "mape": 3.8823,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_7",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.0907,
+        "pred": 1.0313,
+        "mape": 5.4435,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2709,
+        "pred": 1.2836,
+        "mape": 1.0048,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2709,
+        "pred": 1.3112,
+        "mape": 3.172,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2163,
+        "pred": 1.2404,
+        "mape": 1.9803,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2163,
+        "pred": 1.2959,
+        "mape": 6.5409,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1676,
+        "pred": 1.212,
+        "mape": 3.8073,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1676,
+        "pred": 1.271,
+        "mape": 8.8628,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2163,
+        "pred": 1.2079,
+        "mape": 0.6933,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2163,
+        "pred": 1.2132,
+        "mape": 0.2591,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1676,
+        "pred": 1.158,
+        "mape": 0.82,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1676,
+        "pred": 1.1918,
+        "mape": 2.0766,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1609,
+        "pred": 1.1187,
+        "mape": 3.6321,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1609,
+        "pred": 1.1614,
+        "mape": 0.0486,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1676,
+        "pred": 1.1685,
+        "mape": 0.0808,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1676,
+        "pred": 1.1682,
+        "mape": 0.0518,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1609,
+        "pred": 1.1331,
+        "mape": 2.3967,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1609,
+        "pred": 1.143,
+        "mape": 1.5391,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1569,
+        "pred": 1.1047,
+        "mape": 4.5119,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1569,
+        "pred": 1.1174,
+        "mape": 3.4128,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1609,
+        "pred": 1.1336,
+        "mape": 2.3519,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1609,
+        "pred": 1.1304,
+        "mape": 2.6249,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1569,
+        "pred": 1.1058,
+        "mape": 4.4225,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1569,
+        "pred": 1.1071,
+        "mape": 4.31,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1549,
+        "pred": 1.083,
+        "mape": 6.2301,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1549,
+        "pred": 1.0864,
+        "mape": 5.9296,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1569,
+        "pred": 1.1338,
+        "mape": 2.0013,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1569,
+        "pred": 1.1238,
+        "mape": 2.8602,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1549,
+        "pred": 1.1201,
+        "mape": 3.0168,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1549,
+        "pred": 1.1083,
+        "mape": 4.0401,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1564,
+        "pred": 1.1096,
+        "mape": 4.0455,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1564,
+        "pred": 1.0951,
+        "mape": 5.2992,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1564,
+        "pred": 1.137,
+        "mape": 1.6814,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1564,
+        "pred": 1.1317,
+        "mape": 2.1386,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.157,
+        "pred": 1.1327,
+        "mape": 2.1052,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.157,
+        "pred": 1.1258,
+        "mape": 2.703,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1647,
+        "pred": 1.1295,
+        "mape": 3.0215,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_8",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1647,
+        "pred": 1.1206,
+        "mape": 3.7833,
+        "difficulty": "Easy"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.3707,
+        "pred": 1.3864,
+        "mape": 1.1442,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 3,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.3707,
+        "pred": 1.4445,
+        "mape": 5.381,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.2768,
+        "pred": 1.3061,
+        "mape": 2.2945,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 3,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.2768,
+        "pred": 1.4201,
+        "mape": 11.2242,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.195,
+        "pred": 1.25,
+        "mape": 4.6063,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 3,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.195,
+        "pred": 1.3802,
+        "mape": 15.4966,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.2768,
+        "pred": 1.2535,
+        "mape": 1.8237,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 4,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.2768,
+        "pred": 1.2786,
+        "mape": 0.1427,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.195,
+        "pred": 1.1802,
+        "mape": 1.2347,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 4,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.195,
+        "pred": 1.2389,
+        "mape": 3.6783,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1769,
+        "pred": 1.1247,
+        "mape": 4.4384,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 4,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1769,
+        "pred": 1.1933,
+        "mape": 1.3892,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.195,
+        "pred": 1.1891,
+        "mape": 0.4894,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 5,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.195,
+        "pred": 1.1894,
+        "mape": 0.4675,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1769,
+        "pred": 1.1227,
+        "mape": 4.6087,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 5,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1769,
+        "pred": 1.1451,
+        "mape": 2.7082,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1818,
+        "pred": 1.0679,
+        "mape": 9.6339,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 5,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1818,
+        "pred": 1.106,
+        "mape": 6.4117,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1769,
+        "pred": 1.1299,
+        "mape": 3.9948,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 6,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1769,
+        "pred": 1.1206,
+        "mape": 4.7868,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1818,
+        "pred": 1.0781,
+        "mape": 8.771,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 6,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1818,
+        "pred": 1.0837,
+        "mape": 8.2984,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1864,
+        "pred": 1.0348,
+        "mape": 12.7741,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 6,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1864,
+        "pred": 1.0531,
+        "mape": 11.2338,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.1818,
+        "pred": 1.1399,
+        "mape": 3.5437,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 7,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.1818,
+        "pred": 1.1107,
+        "mape": 6.0143,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1864,
+        "pred": 1.1196,
+        "mape": 5.6243,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 7,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1864,
+        "pred": 1.089,
+        "mape": 8.2054,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.189,
+        "pred": 1.1051,
+        "mape": 7.0596,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 7,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.189,
+        "pred": 1.072,
+        "mape": 9.841,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "A_domhan",
+        "actual": 1.189,
+        "pred": 1.1405,
+        "mape": 4.0803,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 9,
+        "horizon": 1,
+        "arm": "B_lcpfn",
+        "actual": 1.189,
+        "pred": 1.1441,
+        "mape": 3.7742,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "A_domhan",
+        "actual": 1.1911,
+        "pred": 1.132,
+        "mape": 4.9611,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 9,
+        "horizon": 2,
+        "arm": "B_lcpfn",
+        "actual": 1.1911,
+        "pred": 1.1387,
+        "mape": 4.4036,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "A_domhan",
+        "actual": 1.1938,
+        "pred": 1.1257,
+        "mape": 5.7036,
+        "difficulty": "Medium"
+      },
+      {
+        "curve": "run_9",
+        "cutoff": 9,
+        "horizon": 3,
+        "arm": "B_lcpfn",
+        "actual": 1.1938,
+        "pred": 1.1344,
+        "mape": 4.9746,
+        "difficulty": "Medium"
+      }
+    ]
+  },
+  "cross_run_comparison": {
+    "overall_mape_A_domhan": {
+      "10_epoch": 2.5122,
+      "15_epoch": 3.6608
+    },
+    "overall_mape_B_lcpfn": {
+      "10_epoch": 2.7629,
+      "15_epoch": 4.4677
+    },
+    "note": "15-epoch run has higher MAPE overall for both arms and includes an extra cutoff=9 not tested in the 10-epoch run. The 15-epoch run's paired test (n=10) shows a statistically significant, consistent win for A_domhan; the 10-epoch run's is not significant given the small paired n."
+  }
+}

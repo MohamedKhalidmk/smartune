@@ -1,0 +1,188 @@
+{
+  "config": {
+    "num_runs": 10,
+    "epochs_trained_per_run": 10,
+    "cutoffs_tested": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "horizons_tested": [
+      1,
+      2,
+      3
+    ],
+    "model_name": "Qwen/Qwen2.5-1.5B-Instruct",
+    "train_size": 40,
+    "val_size": 10,
+    "lcpfn_available": true
+  },
+  "aggregate_mape_by_arm": {
+    "A_domhan": {
+      "mean": 2.5122,
+      "std": 2.3286,
+      "count": 150
+    },
+    "B_lcpfn": {
+      "mean": 2.7629,
+      "std": 3.041,
+      "count": 150
+    }
+  },
+  "mape_by_cutoff_and_arm": [
+    {
+      "cutoff": 3,
+      "arm": "A_domhan",
+      "mean": 5.9842,
+      "std": 2.6313,
+      "count": 30
+    },
+    {
+      "cutoff": 3,
+      "arm": "B_lcpfn",
+      "mean": 7.9348,
+      "std": 2.9087,
+      "count": 30
+    },
+    {
+      "cutoff": 4,
+      "arm": "A_domhan",
+      "mean": 1.5261,
+      "std": 1.0664,
+      "count": 30
+    },
+    {
+      "cutoff": 4,
+      "arm": "B_lcpfn",
+      "mean": 1.5775,
+      "std": 1.0953,
+      "count": 30
+    },
+    {
+      "cutoff": 5,
+      "arm": "A_domhan",
+      "mean": 1.6729,
+      "std": 1.0619,
+      "count": 30
+    },
+    {
+      "cutoff": 5,
+      "arm": "B_lcpfn",
+      "mean": 0.857,
+      "std": 0.5415,
+      "count": 30
+    },
+    {
+      "cutoff": 6,
+      "arm": "A_domhan",
+      "mean": 1.4604,
+      "std": 1.0655,
+      "count": 30
+    },
+    {
+      "cutoff": 6,
+      "arm": "B_lcpfn",
+      "mean": 1.2841,
+      "std": 0.8222,
+      "count": 30
+    },
+    {
+      "cutoff": 7,
+      "arm": "A_domhan",
+      "mean": 1.9174,
+      "std": 1.3492,
+      "count": 30
+    },
+    {
+      "cutoff": 7,
+      "arm": "B_lcpfn",
+      "mean": 2.1612,
+      "std": 1.1684,
+      "count": 30
+    }
+  ],
+  "head_to_head": {
+    "arm_a_wins": 77,
+    "arm_b_wins": 73,
+    "ties": 0,
+    "total_cases": 150
+  },
+  "arm_c_fixed_budget": {
+    "3": {
+      "mean_final_metric": 1.441,
+      "std_final_metric": 0.0984
+    },
+    "4": {
+      "mean_final_metric": 1.3122,
+      "std_final_metric": 0.0878
+    },
+    "5": {
+      "mean_final_metric": 1.2518,
+      "std_final_metric": 0.0818
+    },
+    "6": {
+      "mean_final_metric": 1.2068,
+      "std_final_metric": 0.0813
+    },
+    "7": {
+      "mean_final_metric": 1.1713,
+      "std_final_metric": 0.0798
+    }
+  },
+  "difficulty_labels": {
+    "run_1": "Easy",
+    "run_2": "Easy",
+    "run_8": "Easy",
+    "run_4": "Easy",
+    "run_0": "Medium",
+    "run_3": "Medium",
+    "run_5": "Medium",
+    "run_7": "Hard",
+    "run_9": "Hard",
+    "run_6": "Hard"
+  },
+  "difficulty_scores": {
+    "run_0": 0.0826,
+    "run_1": 0.075,
+    "run_2": 0.0787,
+    "run_3": 0.1,
+    "run_4": 0.0812,
+    "run_5": 0.107,
+    "run_6": 0.1193,
+    "run_7": 0.1116,
+    "run_8": 0.0795,
+    "run_9": 0.1166
+  },
+  "mape_by_difficulty": {
+    "Easy": {
+      "mean": 2.1112,
+      "count": 120
+    },
+    "Hard": {
+      "mean": 3.0986,
+      "count": 90
+    },
+    "Medium": {
+      "mean": 2.8784,
+      "count": 90
+    }
+  },
+  "worst_case_overlap": {
+    "in_both_arms_worst_15": [
+      "run_0",
+      "run_3",
+      "run_4",
+      "run_5",
+      "run_6",
+      "run_7",
+      "run_9"
+    ],
+    "only_in_arm_a_worst_15": [],
+    "only_in_arm_b_worst_15": [
+      "run_1",
+      "run_2"
+    ]
+  }
+}
