@@ -40,7 +40,7 @@ from jax.sharding import Mesh, PartitionSpec as P, NamedSharding
 from transformers import AutoModelForCausalLM, AutoConfig
 import torch
 
-from qwen2_flax import Qwen2Config, Qwen2ForCausalLM
+from Qwen_flax import Qwen2Config, Qwen2ForCausalLM
 from parity_check import convert_pytorch_to_flax_params
 
 MODEL_NAME = "Qwen/Qwen2.5-1.5B-Instruct"

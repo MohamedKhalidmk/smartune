@@ -234,6 +234,7 @@ def run_finetune(
     num_gpus: int = 1,
     gpu_memory_gb: float = 16.0,
     seed: int = 42,
+    use_jax_for_full_finetune: bool = True,
 ) -> dict:
     """
     Fine-tune a causal language model using LoRA or full fine-tuning.
@@ -241,6 +242,13 @@ def run_finetune(
     method:
         "lora" -> automatically chooses standard LoRA or QLoRA.
         "full" -> trains every parameter without PEFT/quantization.
+                  By default this is executed via the JAX/Flax Qwen2 port
+                  in training/jax_v_pytorch/ (see
+                  full_finetune_jax.run_jax_full_finetune), since JAX's
+                  jit-compiled train step + explicit sharding gives better
+                  full-parameter training throughput/memory behavior than
+                  plain PyTorch. Set use_jax_for_full_finetune=False to fall
+                  back to the plain-PyTorch full fine-tuning path instead.
 
     progress_callback is called during training with available metrics.
 
@@ -254,6 +262,7 @@ def run_finetune(
             "train_loss_history": list,
             "val_loss_history": list,
             "used_qlora": bool,
+            "used_jax_full_finetune": bool,
             "seed": int,
         }
     """
@@ -280,6 +289,29 @@ def run_finetune(
     # --------------------------------------------------------
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+    # --------------------------------------------------------
+    # Full fine-tuning via JAX: separate code path
+    # --------------------------------------------------------
+    #
+    # This bypasses the PyTorch Trainer entirely -- the JAX loop has its
+    # own model loading, its own step/epoch loop, and its own weight
+    # conversion back to a PyTorch state_dict at the end. It still reports
+    # progress through the same progress_callback protocol so dashboard
+    # code doesn't need to know which backend actually ran.
+
+    if method == "full" and use_jax_for_full_finetune:
+        return _run_full_finetune_jax(
+            model_name=model_name,
+            tokenizer=tokenizer,
+            train_dataset=train_dataset,
+            val_dataset=val_dataset,
+            progress_callback=progress_callback,
+            num_train_epochs=num_train_epochs,
+            learning_rate=learning_rate,
+            per_device_train_batch_size=per_device_train_batch_size,
+            seed=seed,
+        )
 
     # --------------------------------------------------------
     # QLoRA decision
@@ -564,5 +596,113 @@ def run_finetune(
         "train_loss_history": train_loss_history,
         "val_loss_history": val_loss_history,
         "used_qlora": quantization_config is not None,
+        "used_jax_full_finetune": False,
+        "seed": seed,
+    }
+
+
+# ============================================================
+# Full fine-tuning via JAX (method == "full")
+# ============================================================
+
+def _run_full_finetune_jax(
+    model_name: str,
+    tokenizer,
+    train_dataset: list[dict],
+    val_dataset: list[dict] | None,
+    progress_callback,
+    num_train_epochs: int,
+    learning_rate: float,
+    per_device_train_batch_size: int,
+    seed: int,
+) -> dict:
+    """
+    Dispatch full fine-tuning to the JAX/Flax Qwen2 implementation in
+    training/jax_v_pytorch/full_finetune_jax.py, then load the trained
+    weights back into a standard HF AutoModelForCausalLM so the returned
+    "model" behaves exactly like the PyTorch path's (evaluation/
+    eval_harness.py calls model.generate() / reads model.device, and
+    llm_judge.py / report.py depend on that downstream).
+    """
+
+    from training.jax_v_pytorch.full_finetune_jax import run_jax_full_finetune
+
+    # Tokenize with the same helper the PyTorch path uses, so behavior
+    # (chat template, truncation/padding to 512) stays identical regardless
+    # of backend.
+    train_tokenized = _format_and_tokenize(train_dataset, tokenizer)
+
+    val_tokenized = (
+        _format_and_tokenize(val_dataset, tokenizer)
+        if val_dataset
+        else None
+    )
+
+    result = run_jax_full_finetune(
+        model_name=model_name,
+        train_input_ids=train_tokenized["input_ids"],
+        train_attention_mask=train_tokenized["attention_mask"],
+        val_input_ids=(
+            val_tokenized["input_ids"] if val_tokenized is not None else None
+        ),
+        val_attention_mask=(
+            val_tokenized["attention_mask"]
+            if val_tokenized is not None
+            else None
+        ),
+        progress_callback=progress_callback,
+        num_train_epochs=num_train_epochs,
+        learning_rate=learning_rate,
+        per_device_train_batch_size=per_device_train_batch_size,
+        seed=seed,
+    )
+
+    # --------------------------------------------------------
+    # Load the JAX-trained weights into a fresh HF PyTorch model so the
+    # rest of the pipeline (eval_harness.generate, llm_judge, report) can
+    # keep treating "model" as an ordinary transformers model.
+    # --------------------------------------------------------
+
+    has_cuda = torch.cuda.is_available()
+    model_dtype = torch.bfloat16 if has_cuda else torch.float32
+
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name,
+        dtype=model_dtype,
+        device_map="auto" if has_cuda else None,
+    )
+
+    state_dict = {
+        k: torch.from_numpy(v).to(model_dtype)
+        for k, v in result["state_dict"].items()
+    }
+
+    missing, unexpected = model.load_state_dict(state_dict, strict=False)
+    if unexpected:
+        raise RuntimeError(
+            "JAX-trained weights included keys not present in the "
+            f"PyTorch model: {unexpected}"
+        )
+    # `missing` is expected to be empty or, at most, a tied lm_head.weight
+    # that HF re-derives from the embedding automatically -- anything else
+    # missing means the reverse converter's key mapping is out of sync
+    # with Qwen_flax.py / parity_check.py and needs to be fixed there.
+    real_missing = [k for k in missing if k != "lm_head.weight"]
+    if real_missing:
+        raise RuntimeError(
+            "JAX-trained weights were missing keys the PyTorch model "
+            f"expects: {real_missing}"
+        )
+
+    return {
+        "model": model,
+        "training_time_s": result["training_time_s"],
+        "throughput_examples_per_sec": result["throughput_examples_per_sec"],
+        "peak_gpu_memory_gb": result["peak_gpu_memory_gb"],
+        "final_loss": result["final_loss"],
+        "train_loss_history": result["train_loss_history"],
+        "val_loss_history": result["val_loss_history"],
+        "used_qlora": False,
+        "used_jax_full_finetune": True,
         "seed": seed,
     }

@@ -15,7 +15,7 @@ import jax.numpy as jnp
 import torch
 from transformers import AutoModelForCausalLM, AutoConfig, AutoTokenizer
 
-from qwen2_flax import Qwen2Config, Qwen2ForCausalLM
+from Qwen_flax import Qwen2Config, Qwen2ForCausalLM
 
 MODEL_NAME = "Qwen/Qwen2.5-1.5B-Instruct"
 
