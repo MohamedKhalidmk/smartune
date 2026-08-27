@@ -27,6 +27,9 @@ None of this makes a stop/continue decision. That is handled by
 decision_engine.py.
 """
 
+from __future__ import annotations
+
+
 import matplotlib
 import numpy as np
 from scipy.optimize import curve_fit

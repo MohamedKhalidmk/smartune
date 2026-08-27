@@ -16,6 +16,7 @@ substance.
 Raw outputs are therefore always preserved in judge_outputs() so a
 human can inspect the actual responses alongside the judge's verdict.
 """
+from __future__ import annotations
 
 import json
 import time

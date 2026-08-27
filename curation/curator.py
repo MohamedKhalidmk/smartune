@@ -11,6 +11,9 @@ a stable _id rather than question text, so the report always reflects
 the current resolved state of the dataset.
 """
 
+from __future__ import annotations
+
+
 # ============================================================
 # STANDARD LIBRARY
 # ============================================================

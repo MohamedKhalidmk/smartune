@@ -13,6 +13,7 @@ Valid actions:
     CONTINUE_MORE_EPOCHS
     UNLIKELY_TO_SUCCEED
 """
+from __future__ import annotations
 
 import json
 

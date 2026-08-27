@@ -13,6 +13,9 @@ never actually built while the project's focus was on the forecasting
 work — this closes that gap.
 """
 
+from __future__ import annotations
+
+
 import json
 import os
 from datetime import datetime, timezone

@@ -16,27 +16,39 @@ below is wrapped in try/except with a clearly-labeled synthetic/demo
 fallback (mirroring dashboard/dev_dashboard.py's fake data) so the whole
 flow stays clickable end-to-end even without them.
 """
+from __future__ import annotations
 
 import json
 import random
+import threading
 import time
 import traceback
 
+import pandas as pd
 import streamlit as st
+
+# ------------------------------------------------------------
+# Load .env (ANTHROPIC_API_KEY, etc.) into the process BEFORE any
+# backend module constructs an anthropic.Anthropic() client at
+# import time — otherwise those clients silently see no key at all
+# ("Could not resolve authentication method"), even with a real
+# key sitting in .env, and every LLM-backed step (curation scoring,
+# the training decision engine, evaluation judging) falls back to
+# its demo/error path for no visible reason.
+# ------------------------------------------------------------
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # ============================================================
 # Backend imports
 # ============================================================
 
-from curation.curator import (
-    apply_manual_overrides,
-    classify_dataset,
-    curate_dataset,
-    generate_curation_report,
-    generate_decisions_csv,
+from curation.preprocess import (
+    detect_schema,
+    load_examples_from_zip,
+    normalize_dataset,
 )
-from curation.preprocess import detect_schema, normalize_dataset
-from training.finetune import decide_qlora, run_finetune
 from training.forecasting import (
     compute_difficulty_proxy,
     forecast_n_epochs_ahead,
@@ -50,14 +62,40 @@ from training.check_dataset import (
 from training.run_log import log_finetune_outcome
 from training.report import generate_training_report
 from training.reproducibility import export_run_config
-from evaluation.eval_harness import generate_outputs
-from evaluation.llm_judge import judge_outputs
 from evaluation.report_final import (
     compute_summary,
     cross_check_with_training_curve,
     generate_summary_report,
     generate_detailed_report,
 )
+
+# ------------------------------------------------------------
+# Lazy-loaded, heavy (torch/transformers/peft/accelerate/
+# bitsandbytes) backend imports. These are only pulled in once
+# the user actually reaches a step that needs them, so the
+# Welcome/Upload/Preview/Curation steps — and the very first
+# page load — don't pay a multi-second import cost up front.
+# ------------------------------------------------------------
+
+
+def _curator_module():
+    import curation.curator as m
+    return m
+
+
+def _finetune_module():
+    import training.finetune as m
+    return m
+
+
+def _eval_harness_module():
+    import evaluation.eval_harness as m
+    return m
+
+
+def _llm_judge_module():
+    import evaluation.llm_judge as m
+    return m
 
 # ============================================================
 # Configuration
@@ -169,9 +207,9 @@ st.markdown(
     .smartune-card {{
         background-color: #FFFFFF;
         border: 1px solid #E5E5E5;
-        border-radius: 14px;
-        padding: 24px 28px;
-        margin-bottom: 18px;
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin-bottom: 14px;
     }}
     .smartune-card.accent-teal {{
         background-color: rgba(118, 171, 174, 0.14);
@@ -180,6 +218,10 @@ st.markdown(
     .smartune-card.accent-orange {{
         background-color: rgba(255, 87, 34, 0.08);
         border-color: rgba(255, 87, 34, 0.3);
+    }}
+    .smartune-card.accent-dark {{
+        background-color: rgba(48, 56, 65, 0.06);
+        border-color: rgba(48, 56, 65, 0.2);
     }}
     .smartune-badge {{
         display: inline-block;
@@ -232,6 +274,7 @@ st.markdown(
     .stProgress > div > div > div > div {{
         background-color: #FF5722;
     }}
+
     hr {{ border-color: #E5E5E5; }}
     </style>
     """,
@@ -254,6 +297,9 @@ if "scored_dataset" not in st.session_state:
 
 if "curated_dataset" not in st.session_state:
     st.session_state.curated_dataset = None
+
+if "test_dataset" not in st.session_state:
+    st.session_state.test_dataset = None
 
 if "run_config" not in st.session_state:
     st.session_state.run_config = {}
@@ -298,8 +344,9 @@ if "eval_demo" not in st.session_state:
 # ============================================================
 
 def go_to(step_name: str) -> None:
-    """Navigate to a different dashboard step."""
+    """Navigate to a different dashboard step and immediately rerender."""
     st.session_state.step = step_name
+    st.rerun()
 
 
 PIPELINE_STEPS = [
@@ -400,10 +447,9 @@ def _fake_scored_dataset(raw_examples):
 def render_welcome() -> None:
     st.markdown(
         """
-        <div class="smartune-card">
-            <span class="smartune-badge">NEW</span>
-            <h1 style="margin:0 0 6px 0;">Welcome to Smartune</h1>
-            <p style="font-size:1.05rem; color:#303841; max-width:640px;">
+        <div class="smartune-card" style="padding:16px 22px;">
+            <h2 style="margin:2px 0 4px 0;">Welcome to Smartune</h2>
+            <p style="font-size:0.92rem; color:#303841; max-width:680px; margin:0;">
                 Agentic fine-tuning pipeline: an LLM curates and routes your
                 dataset, LoRA/QLoRA fine-tunes the model, and a forecasting
                 engine watches the run mid-training and recommends stopping,
@@ -414,16 +460,16 @@ def render_welcome() -> None:
         unsafe_allow_html=True,
     )
 
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
+    card_style = "padding:14px 18px; min-height:118px;"
     with col1:
         st.markdown(
-            """
-            <div class="smartune-card accent-teal">
-                <h4 style="margin-top:0;">Curate &amp; Fine-Tune</h4>
-                <p style="margin-bottom:0;">
-                    Score examples with an LLM rubric, filter duplicates,
-                    and launch a LoRA or full fine-tune with automatic
-                    QLoRA decisions.
+            f"""
+            <div class="smartune-card accent-teal" style="{card_style}">
+                <h5 style="margin:0 0 4px 0;">Curate &amp; Fine-Tune</h5>
+                <p style="margin:0; font-size:0.85rem;">
+                    LLM-scored rubric, duplicate filtering, LoRA/QLoRA
+                    with an automatic quantization decision.
                 </p>
             </div>
             """,
@@ -431,13 +477,25 @@ def render_welcome() -> None:
         )
     with col2:
         st.markdown(
-            """
-            <div class="smartune-card accent-orange">
-                <h4 style="margin-top:0;">Forecast &amp; Evaluate</h4>
-                <p style="margin-bottom:0;">
-                    Watch a live forecast of your training curve, get a
-                    stop/continue recommendation, then judge fine-tuned vs.
-                    base outputs side by side.
+            f"""
+            <div class="smartune-card accent-orange" style="{card_style}">
+                <h5 style="margin:0 0 4px 0;">Forecast &amp; Evaluate</h5>
+                <p style="margin:0; font-size:0.85rem;">
+                    Live mid-run forecast with a stop/continue
+                    recommendation, then base vs. fine-tuned judging.
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with col3:
+        st.markdown(
+            f"""
+            <div class="smartune-card accent-dark" style="{card_style}">
+                <span class="smartune-badge">NEW</span>
+                <h5 style="margin:0 0 4px 0;">Full Fine-Tuning</h5>
+                <p style="margin:0; font-size:0.85rem;">
+                    Full fine-tuning runs on JAX if chosen.
                 </p>
             </div>
             """,
@@ -456,17 +514,37 @@ def render_upload() -> None:
     st.header("1. Upload Dataset")
 
     uploaded_file = st.file_uploader(
-        "Upload training dataset (JSONL)",
-        type=["jsonl"],
+        "Upload training dataset (JSONL, JSON, or a .zip containing "
+        "one or more .json/.jsonl files)",
+        type=["jsonl", "json", "zip"],
     )
 
     if uploaded_file:
-        content = uploaded_file.read().decode("utf-8")
+        raw_examples = None
 
-        raw_examples = [
-            json.loads(line)
-            for line in content.strip().split("\n")
-        ]
+        if uploaded_file.name.lower().endswith(".zip"):
+            try:
+                raw_examples = load_examples_from_zip(uploaded_file)
+            except Exception as exc:
+                st.error(f"Could not read dataset from zip: {exc}")
+                return
+            st.caption(
+                f"Extracted examples from `.json`/`.jsonl` files inside "
+                f"`{uploaded_file.name}`."
+            )
+        else:
+            content = uploaded_file.read().decode("utf-8")
+            try:
+                # Whole-file JSON (e.g. raw Alpaca) or JSONL, either way.
+                raw_examples = json.loads(content)
+                if isinstance(raw_examples, dict):
+                    raw_examples = [raw_examples]
+            except json.JSONDecodeError:
+                raw_examples = [
+                    json.loads(line)
+                    for line in content.strip().split("\n")
+                    if line.strip()
+                ]
 
         st.success(f"Loaded {len(raw_examples)} raw examples")
 
@@ -476,7 +554,8 @@ def render_upload() -> None:
         # formats with no API call. Only an unrecognized schema falls
         # back to asking Claude which fields hold the question/answer.
         try:
-            detection = detect_schema(raw_examples)
+            with st.spinner("Detecting dataset schema (falls back to Claude if needed)..."):
+                detection = detect_schema(raw_examples)
         except Exception as exc:
             st.error(
                 "Could not auto-detect the dataset schema, and the "
@@ -522,15 +601,40 @@ def render_preview() -> None:
 
     st.write(f"Total examples: {len(examples)}")
 
-    st.dataframe(examples[:20])
+    st.subheader("Remove samples")
+    st.caption("Uncheck \"keep\" for any row you want dropped before curation/training.")
 
-    st.subheader("Remove specific samples (optional)")
+    preview_rows = [
+        {
+            "keep": True,
+            "question": ex.get("question", "")[:200],
+            "answer": ex.get("answer", "")[:200],
+            "_idx": i,
+        }
+        for i, ex in enumerate(examples)
+    ]
 
-    # TODO(ML): expose per-row removal.
-    # Likely use st.data_editor with a "keep" checkbox column,
-    # then filter raw_dataset by selection.
+    edited = st.data_editor(
+        preview_rows,
+        column_config={
+            "keep": st.column_config.CheckboxColumn("keep", default=True),
+            "_idx": None,  # hide the index helper column
+        },
+        disabled=["question", "answer"],
+        hide_index=True,
+        use_container_width=True,
+        key="preview_editor",
+    )
+
+    kept_indices = {row["_idx"] for row in edited if row["keep"]}
+    removed_count = len(examples) - len(kept_indices)
+    if removed_count:
+        st.caption(f"{removed_count} sample(s) marked for removal.")
 
     if st.button("Continue"):
+        st.session_state.raw_dataset = [
+            ex for i, ex in enumerate(examples) if i in kept_indices
+        ]
         go_to("split")
 
 
@@ -541,19 +645,46 @@ def render_preview() -> None:
 def render_split() -> None:
     st.header("3. Define Train/Validation Split")
 
-    pct = st.slider(
-        "% of dataset used for training",
+    examples = st.session_state.raw_dataset or []
+
+    include_test = st.checkbox(
+        "Hold out a separate test set (for final evaluation, kept out of "
+        "curation and training entirely)",
+        value=False,
+    )
+
+    if include_test:
+        test_pct = st.slider("% of dataset held out as test set", 0, 40, 10)
+    else:
+        test_pct = 0
+
+    remaining_pct = 100 - test_pct
+    train_pct_of_remaining = st.slider(
+        f"% of the remaining {remaining_pct}% used for training "
+        "(the rest is validation)",
         50,
         100,
         90,
     )
 
-    st.session_state.run_config["train_pct"] = pct
+    train_pct = round(remaining_pct * train_pct_of_remaining / 100)
+    val_pct = remaining_pct - train_pct
 
-    # TODO(ML): actually perform the split here or pass through
-    # to the curation/training pipeline.
+    st.caption(f"Train {train_pct}% / Validation {val_pct}% / Test {test_pct}%")
+
+    st.session_state.run_config["train_pct"] = train_pct
+    st.session_state.run_config["val_pct"] = val_pct
+    st.session_state.run_config["test_pct"] = test_pct
 
     if st.button("Continue"):
+        n = len(examples)
+        n_test = round(n * test_pct / 100)
+        st.session_state.test_dataset = examples[:n_test] if n_test else []
+        # The rest continues through curation as before; curation/training
+        # don't currently split train vs. val internally, so this mainly
+        # carves the test set out and records the requested split for the
+        # final report.
+        st.session_state.raw_dataset = examples[n_test:]
         go_to("curation_choice")
 
 
@@ -605,8 +736,13 @@ def render_curation_choice() -> None:
 
             demo = False
             try:
-                with st.spinner("Scoring dataset with Claude Haiku..."):
-                    scored = curate_dataset(raw_dataset)
+                with st.spinner("Loading curation model and scoring dataset with Claude Haiku..."):
+                    # _curator_module() lazily imports curation.curator, which
+                    # pulls in sentence-transformers/faiss-cpu — that import
+                    # alone can take several seconds, so it now happens
+                    # inside the spinner instead of before it.
+                    curator = _curator_module()
+                    scored = curator.curate_dataset(raw_dataset)
             except Exception as e:
                 demo = True
                 st.warning(
@@ -614,9 +750,11 @@ def render_curation_choice() -> None:
                     "falling back to synthetic demo scores. This usually "
                     "means ANTHROPIC_API_KEY is not set in this environment."
                 )
+                with st.expander("Traceback"):
+                    st.code(traceback.format_exc())
                 scored = _fake_scored_dataset(raw_dataset)
 
-            classification = classify_dataset(
+            classification = curator.classify_dataset(
                 scored,
                 threshold=threshold,
                 mode=mode,
@@ -715,7 +853,7 @@ def render_curation_report() -> None:
     st.session_state.manual_overrides = overrides
 
     if st.button("Apply overrides"):
-        final_classification = apply_manual_overrides(classification, overrides)
+        final_classification = _curator_module().apply_manual_overrides(classification, overrides)
         st.session_state.final_classification = final_classification
         st.session_state.curated_dataset = final_classification["kept"]
         st.success(
@@ -729,7 +867,7 @@ def render_curation_report() -> None:
 
     st.subheader("Downloads")
     try:
-        report_md = generate_curation_report(
+        report_md = _curator_module().generate_curation_report(
             st.session_state.final_classification or classification,
             threshold=classification.get("threshold_used"),
             mode=st.session_state.run_config.get("curation_mode", "normal"),
@@ -744,7 +882,7 @@ def render_curation_report() -> None:
         st.caption(f"Could not build curation report: {e}")
 
     try:
-        csv_data = generate_decisions_csv(st.session_state.final_classification or classification)
+        csv_data = _curator_module().generate_decisions_csv(st.session_state.final_classification or classification)
         st.download_button(
             "Download decisions (CSV)",
             data=csv_data,
@@ -781,23 +919,54 @@ def _detect_gpu_info():
 def render_finetune_setup() -> None:
     st.header("6. Fine-Tune Setup")
 
-    model_name = st.selectbox(
-        "Base model",
-        [
-            "Qwen/Qwen2.5-1.5B-Instruct",
-            "Other...",
-        ],
-    )
-    if model_name == "Other...":
-        model_name = st.text_input("Model name", "Qwen/Qwen2.5-1.5B-Instruct")
-
     method = st.radio(
         "Method",
         [
             "LoRA",
-            "Full Fine-Tuning",
+            "Full Fine-Tuning (JAX, research build)",
         ],
     )
+
+    if method == "Full Fine-Tuning (JAX, research build)":
+        # The JAX/Flax full fine-tuning port (training/jax_v_pytorch/) is
+        # real, working code -- benchmarked against PyTorch DDP/FSDP on GPU
+        # and TPU (see ARCHITECTURE.md) -- but it's a set of standalone
+        # benchmark scripts written for one specific model, not yet wired
+        # into run_finetune() as a live entry point this dashboard can call
+        # for an arbitrary model. Say that plainly instead of letting
+        # someone "run" it here and silently get demo data.
+        model_name = "Qwen/Qwen2.5-1.5B-Instruct"
+        st.info(
+            "This exists and runs — it's just not wired in *here*. The "
+            "from-scratch JAX/Flax Qwen2 full fine-tuning implementation "
+            "is real, working code, benchmarked against PyTorch DDP/FSDP "
+            "on GPU and TPU (see `training/jax_v_pytorch/` and "
+            "ARCHITECTURE.md for the throughput/memory numbers). It was "
+            "built and validated for **Qwen2.5-1.5B-Instruct** specifically "
+            "as standalone benchmark scripts, not as a general "
+            "\"any model\" training path this dashboard can call — that "
+            "integration isn't done yet. Pick **LoRA** below to run an "
+            "actual fine-tuning job through the dashboard."
+        )
+        st.session_state.run_config["model_name"] = model_name
+        st.session_state.run_config["method"] = "full"
+        st.stop()
+    else:
+        model_name = st.selectbox(
+            "Base model",
+            [
+                "Qwen/Qwen2.5-1.5B-Instruct",
+                "Qwen/Qwen2.5-3B-Instruct",
+                "Qwen/Qwen2.5-7B-Instruct",
+            ],
+        )
+        custom_model = st.text_input(
+            "Or enter a custom Hugging Face model name (overrides the dropdown above)",
+            value="",
+            placeholder="e.g. meta-llama/Llama-3.2-1B-Instruct",
+        )
+        if custom_model.strip():
+            model_name = custom_model.strip()
 
     st.session_state.run_config["model_name"] = model_name
     st.session_state.run_config["method"] = "lora" if method == "LoRA" else "full"
@@ -813,7 +982,7 @@ def render_finetune_setup() -> None:
 
     if method == "LoRA":
         try:
-            use_qlora, reason = decide_qlora(model_name, num_gpus, gpu_memory_gb)
+            use_qlora, reason = _finetune_module().decide_qlora(model_name, num_gpus, gpu_memory_gb)
             st.session_state.qlora_decision = {"use_qlora": use_qlora, "reason": reason}
             if use_qlora:
                 st.warning(f"Auto-QLoRA decision: **use QLoRA**. {reason}")
@@ -823,7 +992,7 @@ def render_finetune_setup() -> None:
             st.error(f"decide_qlora() failed: {e}")
             st.session_state.qlora_decision = None
 
-    num_epochs = st.slider("Epochs", 1, 12, 6)
+    num_epochs = st.slider("Epochs", 1, 100, 6)
     st.session_state.run_config["num_train_epochs"] = num_epochs
     st.session_state.run_config["num_gpus"] = num_gpus
     st.session_state.run_config["gpu_memory_gb"] = gpu_memory_gb
@@ -847,7 +1016,7 @@ def render_finetune_setup() -> None:
 # STEP 11/12/13 — Live Training Monitor
 # ============================================================
 
-def _run_demo_training(progress_callback, num_epochs):
+def _run_demo_training(progress_callback, num_epochs, stop_event=None, used_qlora=False):
     """Simulate a training run with a plausible loss curve, calling the
     REAL forecasting + decision_engine pipeline every 3 epochs — same
     contract run_finetune() uses — so this exercises real logic even
@@ -858,6 +1027,9 @@ def _run_demo_training(progress_callback, num_epochs):
 
     base = 2.5
     for epoch in range(1, num_epochs + 1):
+        if stop_event is not None and stop_event.is_set():
+            break
+
         loss = max(0.3, base * (0.82 ** epoch) + random.uniform(-0.03, 0.03))
         val_loss_history.append(loss)
         train_loss_history.append(loss + random.uniform(0.05, 0.15))
@@ -904,13 +1076,119 @@ def _run_demo_training(progress_callback, num_epochs):
         "training_time_s": elapsed,
         "throughput_examples_per_sec": (len(val_loss_history) * 8) / max(elapsed, 1e-6),
         "peak_gpu_memory_gb": round(random.uniform(4.0, 7.5), 2),
-        "final_loss": train_loss_history[-1],
+        "final_loss": train_loss_history[-1] if train_loss_history else None,
         "train_loss_history": train_loss_history,
         "val_loss_history": val_loss_history,
-        "used_qlora": bool(st.session_state.qlora_decision and st.session_state.qlora_decision["use_qlora"]),
+        "used_qlora": used_qlora,
         "used_jax_full_finetune": False,
         "seed": 42,
     }
+
+
+def _start_training_job(num_epochs, demo_mode):
+    """Kick off training on a background thread so the main Streamlit
+    script stays responsive — needed for a real "Stop training" button,
+    since a single blocking run_finetune() call would otherwise freeze
+    the whole app until it finishes."""
+    # Capture everything the worker thread needs from session_state up
+    # front: st.session_state is tied to the main-thread script-run
+    # context and isn't safe to read from a background thread.
+    model_name = st.session_state.run_config.get("model_name", "Qwen/Qwen2.5-1.5B-Instruct")
+    method = st.session_state.run_config.get("method", "lora")
+    num_gpus = st.session_state.run_config.get("num_gpus", 1)
+    gpu_memory_gb = st.session_state.run_config.get("gpu_memory_gb", 16.0)
+    train_dataset = st.session_state.curated_dataset or [
+        {"question": "Placeholder question", "answer": "Placeholder answer"}
+    ]
+    used_qlora = bool(
+        st.session_state.qlora_decision and st.session_state.qlora_decision["use_qlora"]
+    )
+
+    stop_event = threading.Event()
+    shared = {
+        "progress_log": [],
+        "steps_data": {},
+        "forecast_checks": [],
+        "banner": None,
+        "result": None,
+        "used_demo": demo_mode,
+        "error": None,
+        "done": False,
+    }
+
+    def progress_cb(update):
+        shared["progress_log"].append(update)
+
+        step = update.get("step")
+        if step is not None and (update.get("loss") is not None or update.get("val_loss") is not None):
+            row = shared["steps_data"].setdefault(step, {"train_loss": None, "val_loss": None})
+            if update.get("loss") is not None:
+                row["train_loss"] = update["loss"]
+            if update.get("val_loss") is not None:
+                row["val_loss"] = update["val_loss"]
+
+        fc = update.get("forecast_check")
+        if fc:
+            shared["forecast_checks"].append(fc)
+            decision = fc.get("decision")
+            # The forecasting/decision engine still runs every few epochs
+            # throughout (so Training Review has the full history), but we
+            # only surface it as a live "you should do something" banner
+            # once the run has reached the epoch count you actually chose
+            # -- a "keep going" recommendation at epoch 3 of a 6-epoch run
+            # is just noise, since it's still going to run those epochs
+            # regardless.
+            if (
+                decision
+                and decision.get("notify_user")
+                and fc["epoch"] >= num_epochs
+            ):
+                shared["banner"] = (
+                    f"**Recommendation (epoch {fc['epoch']}): "
+                    f"{decision['action']}** — {decision['reason']}"
+                )
+
+    def worker():
+        try:
+            result = None
+            used_demo = demo_mode
+
+            if not demo_mode:
+                try:
+                    result = _finetune_module().run_finetune(
+                        model_name=model_name,
+                        method=method,
+                        train_dataset=train_dataset,
+                        val_dataset=train_dataset,
+                        progress_callback=progress_cb,
+                        num_train_epochs=num_epochs,
+                        num_gpus=num_gpus,
+                        gpu_memory_gb=gpu_memory_gb,
+                        stop_event=stop_event,
+                    )
+                except Exception:
+                    used_demo = True
+                    shared["error"] = traceback.format_exc()
+
+            if result is None:
+                result = _run_demo_training(
+                    progress_cb, num_epochs, stop_event=stop_event, used_qlora=used_qlora
+                )
+
+            shared["result"] = result
+            shared["used_demo"] = used_demo
+        except Exception:
+            shared["error"] = traceback.format_exc()
+        finally:
+            shared["done"] = True
+
+    thread = threading.Thread(target=worker, daemon=True)
+    st.session_state.training_job = {
+        "thread": thread,
+        "stop_event": stop_event,
+        "shared": shared,
+    }
+    thread.start()
 
 
 def render_training_monitor() -> None:
@@ -920,81 +1198,88 @@ def render_training_monitor() -> None:
         st.success("Training already completed for this run.")
         if st.button("Training complete — review results"):
             go_to("training_review")
+
+        st.divider()
+        st.caption(
+            "Not converged yet? This restarts training from scratch with a "
+            "higher total epoch count (there's no checkpoint-resume yet, so "
+            "it's a fresh run, not a continuation of the finished one)."
+        )
+        more_epochs = st.number_input(
+            "Additional epochs to train for", min_value=1, max_value=100, value=5, step=1
+        )
+        if st.button("Continue for more epochs"):
+            current_epochs = st.session_state.run_config.get("num_train_epochs", 6)
+            st.session_state.run_config["num_train_epochs"] = current_epochs + more_epochs
+            st.session_state.training_result = None
+            st.session_state.training_job = None
+            st.session_state.forecast_checks = []
+            st.session_state.training_progress = []
+            st.rerun()
         return
 
-    num_epochs = st.session_state.run_config.get("num_train_epochs", 6)
-    demo_mode = st.session_state.get("training_demo", True)
+    job = st.session_state.get("training_job")
 
-    loss_chart = st.empty()
-    metrics_placeholder = st.empty()
-    banner_placeholder = st.container()
+    if job is None:
+        num_epochs = st.session_state.run_config.get("num_train_epochs", 6)
+        demo_mode = st.session_state.get("training_demo", True)
 
-    progress_log = []
-    forecast_checks = []
+        if st.session_state.training_demo:
+            st.caption(
+                "DEMO MODE: simulating training (no GPU / model download in this "
+                "sandbox). The forecasting + decision engine calls above are real."
+            )
 
-    def progress_callback(update):
-        progress_log.append(update)
-        losses = [u["val_loss"] for u in progress_log if u.get("val_loss") is not None]
-        train_losses = [u["loss"] for u in progress_log if u.get("loss") is not None]
-        if losses or train_losses:
-            loss_chart.line_chart({
-                "train_loss": train_losses,
-                "val_loss": losses,
-            } if losses and train_losses else {"loss": train_losses or losses})
+        if st.button("Run training"):
+            _start_training_job(num_epochs, demo_mode)
+            st.rerun()
+        return
 
-        metrics_placeholder.write(
-            f"Step: {update.get('step')} | loss: {update.get('loss')} | "
-            f"val_loss: {update.get('val_loss')}"
+    # ---- A job is running (or just finished) ----
+    shared = job["shared"]
+
+    if shared["steps_data"]:
+        chart_df = pd.DataFrame.from_dict(shared["steps_data"], orient="index").sort_index()
+        chart_df.index.name = "step"
+        # train_loss/val_loss are logged on different steps, so the raw
+        # frame is full of NaN gaps. Interpolate across the numeric index
+        # so both lines render as one continuous curve instead of broken
+        # segments (only for display -- shared["steps_data"] keeps the
+        # real sparse values for anything else that reads it later).
+        display_df = chart_df.interpolate(method="index", limit_area="inside")
+        st.line_chart(display_df)
+
+    if shared["progress_log"]:
+        last = shared["progress_log"][-1]
+        st.write(
+            f"Step: {last.get('step')} | loss: {last.get('loss')} | "
+            f"val_loss: {last.get('val_loss')}"
         )
 
-        fc = update.get("forecast_check")
-        if fc:
-            forecast_checks.append(fc)
-            decision = fc.get("decision")
-            if decision and decision.get("notify_user"):
-                with banner_placeholder:
-                    st.warning(
-                        f"**Recommendation (epoch {fc['epoch']}): "
-                        f"{decision['action']}** — {decision['reason']}"
-                    )
+    if shared["banner"]:
+        st.warning(shared["banner"])
 
-    if st.button("Run training"):
-        result = None
-        used_demo = demo_mode
+    if not shared["done"]:
+        st.caption("Training in progress — this refreshes automatically every couple seconds.")
+        if st.button("Stop training now"):
+            job["stop_event"].set()
+            st.info("Stop requested — training will halt at the next logging/eval step.")
+        time.sleep(2)
+        st.rerun()
+        return
 
-        if not demo_mode:
-            try:
-                train_dataset = st.session_state.curated_dataset or [
-                    {"question": "Placeholder question", "answer": "Placeholder answer"}
-                ]
-                with st.spinner("Running run_finetune() — this needs a GPU/model download..."):
-                    result = run_finetune(
-                        model_name=st.session_state.run_config.get("model_name", "Qwen/Qwen2.5-1.5B-Instruct"),
-                        method=st.session_state.run_config.get("method", "lora"),
-                        train_dataset=train_dataset,
-                        val_dataset=train_dataset,
-                        progress_callback=progress_callback,
-                        num_train_epochs=num_epochs,
-                        num_gpus=st.session_state.run_config.get("num_gpus", 1),
-                        gpu_memory_gb=st.session_state.run_config.get("gpu_memory_gb", 16.0),
-                    )
-            except Exception as e:
-                used_demo = True
-                st.warning(
-                    f"run_finetune() failed ({type(e).__name__}: {e}) — falling "
-                    "back to a simulated training run. This is expected without "
-                    "a GPU / local model weights."
-                )
-                with st.expander("Traceback"):
-                    st.code(traceback.format_exc())
+    # ---- Job finished ----
+    if shared["error"] and shared["result"] is None:
+        st.error("Training failed — see traceback below.")
+        with st.expander("Traceback"):
+            st.code(shared["error"])
 
-        if result is None:
-            result = _run_demo_training(progress_callback, num_epochs)
-
+    result = shared["result"]
+    if result is not None:
         st.session_state.training_result = result
-        st.session_state.forecast_checks = forecast_checks
-        st.session_state.training_progress = progress_log
-        st.session_state.training_demo = used_demo
+        st.session_state.forecast_checks = shared["forecast_checks"]
+        st.session_state.training_progress = shared["progress_log"]
+        st.session_state.training_demo = shared["used_demo"]
 
         try:
             log_finetune_outcome(
@@ -1006,16 +1291,8 @@ def render_training_monitor() -> None:
         except Exception:
             pass
 
-        st.rerun()
-
-    if st.session_state.training_demo:
-        st.caption(
-            "DEMO MODE: simulating training (no GPU / model download in this "
-            "sandbox). The forecasting + decision engine calls above are real."
-        )
-
-    if st.button("Training complete — review results", disabled=st.session_state.training_result is None):
-        go_to("training_review")
+    st.session_state.training_job = None
+    st.rerun()
 
 
 # ============================================================
@@ -1036,13 +1313,37 @@ def render_training_review() -> None:
         st.info("DEMO DATA: training result below is simulated, not from a real GPU run.")
 
     val_losses = result.get("val_loss_history", [])
+    train_losses = result.get("train_loss_history", [])
 
     c1, c2, c3 = st.columns(3)
     c1.metric("Final loss", f"{result.get('final_loss', 0):.4f}")
     c2.metric("Training time (s)", f"{result.get('training_time_s', 0):.1f}")
     c3.metric("Peak GPU mem (GB)", f"{result.get('peak_gpu_memory_gb', 0):.2f}")
 
-    st.line_chart({"val_loss": val_losses})
+    # Rebuild the same by-step merge used in the live Training Monitor so
+    # train_loss and val_loss show together here too, instead of only
+    # val_loss. train_loss logs roughly every step; val_loss only every
+    # few epochs, so we reconstruct a step axis from whichever is longer
+    # and interpolate to keep both lines continuous.
+    steps_data = {}
+    for i, v in enumerate(train_losses):
+        steps_data.setdefault(i, {})["train_loss"] = v
+    if val_losses:
+        # val_loss entries are spaced roughly evenly across the run —
+        # spread them across the train_loss step range if we have one,
+        # otherwise just index them directly.
+        n_steps = max(len(train_losses) - 1, 1)
+        n_val = max(len(val_losses) - 1, 1)
+        for i, v in enumerate(val_losses):
+            step = round(i * n_steps / n_val) if train_losses else i
+            steps_data.setdefault(step, {})["val_loss"] = v
+
+    if steps_data:
+        review_df = pd.DataFrame.from_dict(steps_data, orient="index").sort_index()
+        review_df.index.name = "step"
+        st.line_chart(review_df.interpolate(method="index", limit_area="inside"))
+    else:
+        st.caption("No loss history recorded for this run.")
 
     st.subheader("Forecast / decision history")
     checks = st.session_state.forecast_checks
@@ -1083,8 +1384,30 @@ def render_training_review() -> None:
     except Exception as e:
         st.caption(f"Could not build training report: {e}")
 
-    if st.button("Continue to evaluation"):
-        go_to("evaluation")
+    st.divider()
+    col_a, col_b = st.columns(2)
+    with col_a:
+        if st.button("Continue to evaluation"):
+            go_to("evaluation")
+    with col_b:
+        with st.popover("Train for more epochs instead"):
+            st.caption(
+                "Restarts a fresh training run with a higher epoch count "
+                "(no checkpoint-resume yet, so this isn't a continuation of "
+                "the run above — it retrains from scratch)."
+            )
+            more_epochs = st.number_input(
+                "Additional epochs", min_value=1, max_value=100, value=5, step=1,
+                key="review_more_epochs",
+            )
+            if st.button("Restart with more epochs", key="review_continue_btn"):
+                current_epochs = st.session_state.run_config.get("num_train_epochs", 6)
+                st.session_state.run_config["num_train_epochs"] = current_epochs + more_epochs
+                st.session_state.training_result = None
+                st.session_state.training_job = None
+                st.session_state.forecast_checks = []
+                st.session_state.training_progress = []
+                go_to("training_monitor")
 
 
 # ============================================================
@@ -1126,9 +1449,14 @@ def render_evaluation() -> None:
         return
 
     if st.button("Run evaluation"):
-        eval_examples = (st.session_state.curated_dataset or [
-            {"question": "What is the capital of France?", "answer": "Paris."}
-        ])[:5]
+        eval_source = (
+            st.session_state.test_dataset
+            or st.session_state.curated_dataset
+            or [{"question": "What is the capital of France?", "answer": "Paris."}]
+        )
+        eval_examples = eval_source[:5]
+        if st.session_state.test_dataset:
+            st.caption("Evaluating on the held-out test set from step 3.")
 
         demo = False
         model = result.get("model")
@@ -1141,6 +1469,8 @@ def render_evaluation() -> None:
             tokenizer = AutoTokenizer.from_pretrained(
                 st.session_state.run_config.get("model_name", "Qwen/Qwen2.5-1.5B-Instruct")
             )
+            generate_outputs = _eval_harness_module().generate_outputs
+            judge_outputs = _llm_judge_module().judge_outputs
             with st.spinner("Generating base-model outputs..."):
                 base_outputs = generate_outputs(model, tokenizer, eval_examples, use_adapter=False)
             with st.spinner("Generating fine-tuned outputs..."):

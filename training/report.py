@@ -15,6 +15,7 @@ for collecting them into a list.
 
 This module only formats the collected data into a Markdown report.
 """
+from __future__ import annotations
 
 
 def generate_training_report(

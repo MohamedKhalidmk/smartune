@@ -86,52 +86,134 @@ actual value is at the decision points most scripts hardcode:
   fine-tuned model avoided a degenerate repetition failure the base
   model exhibited on one example
 
+## Extension: Full Fine-Tuning + JAX/Flax vs. PyTorch Benchmark
+
+To support full fine-tuning (not just LoRA/QLoRA), Smartune was extended
+with a from-scratch JAX/Flax reimplementation of a Transformer (Qwen2)
+architecture, benchmarked against PyTorch DDP and FSDP across GPU and
+Google Cloud TPU (`training/jax_v_pytorch/`). Before trusting any JAX
+numbers, `parity_check.py` verifies the hand-written Flax port's logits
+against the real PyTorch model — a first pass failed at a max diff of
+0.13 against a 0.05 tolerance despite matching top-1 predictions, traced
+to JAX defaulting to bfloat16-precision matmuls on TPU even for float32
+arrays; forcing `jax_default_matmul_precision="float32"` dropped the diff
+to 0.000034.
+
+Results (Qwen2.5-1.5B fine-tuning on Alpaca, steady-state over 100 steps):
+
+| | 2× T4 (GPU) | TPU v6e-4 |
+|---|---|---|
+| PyTorch DDP | not run | 3,418 tok/s · 26.8GB peak |
+| PyTorch FSDP | 371 tok/s · 7.8GB peak | 3,219 tok/s · 6.2GB peak |
+| JAX (this work) | 429 tok/s · 10.0GB peak | 27,006 tok/s · 9.9GB peak |
+
+![JAX vs PyTorch throughput and memory, GPU vs TPU](results/jax_v_pytorch/barchart_1.png)
+![Fine-tuning throughput comparison](results/jax_v_pytorch/barchart_throughput.png)
+![Peak memory footprint comparison](results/jax_v_pytorch/barchart_memory.png)
+
+- JAX matched PyTorch/XLA FSDP throughput on GPU, but ran ~8x faster on
+  TPU (XLA-compiled) than PyTorch/XLA DDP (27,006 vs. 3,418 tok/s) — and
+  the same JAX code is itself 63x faster on TPU than on the 2xT4 GPU pair.
+- FSDP-style sharding cut peak memory ~4.4x versus DDP (26.8GB → 6.2GB
+  per chip on a v6e-4 TPU).
+
+This benchmark is a separate research artifact from the interactive
+dashboard pipeline — it is not currently wired into `training/finetune.py`
+as a callable, end-to-end training path (the dashboard's "Full
+Fine-Tuning" method is marked "coming soon" for that reason; LoRA/QLoRA
+is the only method that runs live through the UI today). See
+`notebooks/JAX vs PyTorch Analysis.ipynb` and
+`notebooks/JAX_v_PyTorch_T4.ipynb` for the full write-up, and
+`results/jax_v_pytorch/` for the raw result files.
+
+## Extension: Forecasting-Method Comparison
+
+`training/forecasting.py` originally offered two forecasting arms: Arm A
+(Domhan-style parametric curve extrapolation, Domhan et al. 2015) and Arm
+B (LC-PFN, Adriaensen et al. 2023). A controlled comparison across 10 real
+fine-tuning runs (`notebooks/Forecasting_Feature_Research.ipynb`,
+`results/forcasting_results/`) tested both against a fixed-budget null
+baseline at multiple epoch-cutoff sample sizes. An apparent LC-PFN
+advantage at n=8 disappeared at n=160 — Arm A was more accurate on
+average and in head-to-head win count at every cutoff tested except one
+statistically indistinguishable case, and its advantage grew with more
+observed epochs. The larger finding: how much forecast information was
+available (epochs observed) mattered more than which method did the
+extrapolating. Arm A is now the sole forecasting method in production
+(`arm_a_forecast_with_uncertainty`); LC-PFN was dropped as a runtime
+dependency entirely, since it also required bypassing its own PyPI
+version pins and patching for modern PyTorch to install at all.
+
+![Forecast MAPE by cutoff, 10-epoch vs 15-epoch runs](results/forcasting_results/barchart.png)
+![Per-run forecast accuracy comparison](results/forcasting_results/dumbbell_plot.png)
+
+Same 10 runs, more observed epochs, opposite statistical conclusion: with
+only 10 epochs of signal, Arm A wins 8/10 runs but the gap isn't
+significant (Wilcoxon p=0.11); with 15 epochs of signal, Arm A wins
+10/10, now significantly (p=0.002). Observation window, not method
+choice, is what moved the result from noise to signal.
+
 ## Tech Stack
 
 - **Curation / Judging:** Claude Haiku (fast, cheap, rubric scoring),
   Claude Sonnet (deeper judge comparisons where needed)
 - **Fine-tuning:** Hugging Face `transformers`, `peft` (LoRA/QLoRA),
-  `accelerate` (multi-GPU), `bitsandbytes` (quantization)
-- **Dashboard (planned):** Streamlit for the interactive control panel;
-  core pipeline logic ported from the validated notebook into standalone
-  modules (curation, training, evaluation) so the UI is a thin wrapper
-  around tested logic, not new untested code
+  `accelerate`, `bitsandbytes` (quantization)
+- **Full fine-tuning / benchmark:** JAX, Flax, Optax (`jax_v_pytorch/`),
+  PyTorch DDP/FSDP via `torch_xla` for the TPU comparison
+- **Dashboard:** Streamlit; `dashboard/app.py` is the user-facing
+  pipeline UI wired directly to the curation/training/forecasting/
+  evaluation modules below (not a mockup); `dashboard/dev_dashboard.py`
+  is a developer harness that exercises each backend function in
+  isolation with synthetic data where a GPU or API key isn't available
 
-## Future Additions
+## Implemented (originally scoped as future work)
 
-- **Dataset diversity check before curation** — before running per-example
-  LLM scoring, check for near-duplicate examples via embedding similarity
-  clustering. Curation catches per-example *quality*, not dataset-wide
-  *redundancy* — a large set of near-identical examples could all score
-  well individually while adding little combined training value.
-- **Rejected-sample review and override** — the curation report (step 7)
-  shows every rejected example with its reason, and the user can manually
-  accept/restore any of them back into the training set. Haiku's
-  judgment is a strong default, not a final word.
-- **Human-override log** — every time a user manually removes or restores
-  a sample (steps 3.1, 7.1, or the rejected-sample override above), log
-  the action and, optionally, the user's stated reason. Over time this
-  becomes a record of human curation decisions distinct from the model's
-  own — potentially useful later for auditing or improving the curator.
+- **Dataset diversity check before curation** — `curation/curator.py`'s
+  `find_duplicate_candidates` / `verify_duplicates_with_haiku` catch
+  near-duplicate examples via embedding similarity clustering before
+  per-example scoring, since curation alone catches per-example
+  *quality*, not dataset-wide *redundancy*.
+- **Rejected-sample review and override** — the curation report step
+  shows every rejected example with its reason; `apply_manual_overrides`
+  lets the user accept/restore any of them back into the training set,
+  keyed by each example's stable `_id`.
+- **Human-override log** — `log_user_override` records every manual
+  accept/reject/restore decision, distinct from the model's own
+  judgment (`results/user_override_log.jsonl`).
+- **Dataset schema auto-detection** — `curation/preprocess.py` normalizes
+  raw uploads (Alpaca instruction/input/output, prompt/completion,
+  chat-message formats) to the pipeline's `question`/`answer` schema via
+  heuristics, falling back to asking Claude to map fields only when the
+  schema is unrecognized.
 
-## Repo Structure (target)
+## Repo Structure (actual)
 
 ```
 smartune/
-├── data/
 ├── curation/
-│   └── haiku_curator.py
+│   ├── curator.py          # Haiku scoring, duplicate detection, overrides, reports
+│   └── preprocess.py       # schema auto-detection for raw uploads
 ├── training/
-│   └── finetune.py
+│   ├── finetune.py         # LoRA/QLoRA fine-tuning, auto-QLoRA decision
+│   ├── forecasting.py      # Arm A parametric curve extrapolation
+│   ├── decision_engine.py  # stop/continue/flag decision from forecast
+│   ├── check_dataset.py    # pre-training dataset warnings
+│   ├── report.py           # training report assembly
+│   ├── reproducibility.py  # run_config export
+│   ├── run_log.py          # outcome logging
+│   └── jax_v_pytorch/      # JAX/Flax vs. PyTorch DDP/FSDP benchmark scripts
+│                           # (research artifact — not yet wired into
+│                           # finetune.py as a callable full fine-tuning path)
 ├── evaluation/
-│   ├── eval_harness.py
-│   └── llm_judge.py
-├── diagnostics/
-│   └── training_diagnostics.py    # overfitting/underfitting detection
+│   ├── eval_harness.py     # generation (base vs. fine-tuned)
+│   ├── llm_judge.py        # LLM-as-judge comparison
+│   └── report_final.py     # eval summary + cross-check vs. training curve
 ├── dashboard/
-│   └── app.py                     # Streamlit UI
-├── results/
-├── main.py
+│   ├── app.py              # Streamlit UI — the user-facing pipeline
+│   └── dev_dashboard.py    # developer/test harness
+├── notebooks/               # exploratory research and comparisons
+├── results/                 # exported reports, run configs, benchmark results
 ├── requirements.txt
 └── README.md
 ```

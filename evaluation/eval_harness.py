@@ -9,6 +9,9 @@ different from training/forecasting.py, which forecasts the training
 curve rather than the model's actual generation quality.
 """
 
+from __future__ import annotations
+
+
 import time
 
 import torch

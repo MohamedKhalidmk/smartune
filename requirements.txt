@@ -1,4 +1,6 @@
 streamlit>=1.38.0
+python-dotenv>=1.0.0
+pandas>=2.0.0
 anthropic>=0.34.0
 transformers>=4.45.0
 peft>=0.13.2
@@ -11,6 +13,14 @@ numpy>=1.24.0
 scipy>=1.11.0
 sentence-transformers>=3.0.0
 faiss-cpu>=1.8.0
+
+# Used by training/jax_v_pytorch/ (from-scratch JAX/Flax Qwen2 reimplementation,
+# benchmarked against PyTorch DDP/FSDP on GPU and Google Cloud TPU).
+# On GPU: `pip install -U "jax[cuda12]"`. On TPU: `pip install -U "jax[tpu]"
+# -f https://storage.googleapis.com/jax-releases/libtpu_releases.html`.
+jax>=0.4.30
+flax>=0.8.5
+optax>=0.2.2
 
 # lcpfn (LC-PFN forecasting, Adriaensen et al. 2023) is NOT installable
 # via plain `pip install lcpfn` on modern setups — its own PyPI metadata

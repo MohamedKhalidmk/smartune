@@ -5,6 +5,9 @@ LoRA / full fine-tuning, with an automatic QLoRA decision based on
 estimated model size vs. available GPU memory.
 """
 
+from __future__ import annotations
+
+
 import random
 import re
 import time as _time
@@ -235,6 +238,7 @@ def run_finetune(
     gpu_memory_gb: float = 16.0,
     seed: int = 42,
     use_jax_for_full_finetune: bool = True,
+    stop_event=None,
 ) -> dict:
     """
     Fine-tune a causal language model using LoRA or full fine-tuning.
@@ -430,6 +434,9 @@ def run_finetune(
             logs=None,
             **kwargs,
         ):
+            if stop_event is not None and stop_event.is_set():
+                control.should_training_stop = True
+
             if logs and "loss" in logs:
                 train_loss_history.append(logs["loss"])
 
@@ -441,6 +448,8 @@ def run_finetune(
                     }
                 )
 
+            return control
+
         def on_evaluate(
             self,
             args,
@@ -449,8 +458,11 @@ def run_finetune(
             metrics=None,
             **kwargs,
         ):
+            if stop_event is not None and stop_event.is_set():
+                control.should_training_stop = True
+
             if not metrics or "eval_loss" not in metrics:
-                return
+                return control
 
             val_loss_history.append(
                 metrics["eval_loss"]
@@ -517,6 +529,7 @@ def run_finetune(
                     }
 
             progress_callback(update)
+            return control
 
     # --------------------------------------------------------
     # Training arguments

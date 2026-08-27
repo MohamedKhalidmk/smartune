@@ -18,6 +18,7 @@ eventually train or calibrate a REAL pre-training outcome predictor —
 see check_dataset.py's assess_dataset_before_finetuning(), which is
 the heuristic stand-in until that history exists.
 """
+from __future__ import annotations
 
 import json
 import os

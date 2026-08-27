@@ -21,6 +21,7 @@ The heuristic can eventually be replaced or calibrated using historical
 dataset-statistics-to-training-outcome data collected by
 run_log.log_finetune_outcome().
 """
+from __future__ import annotations
 
 import json
 

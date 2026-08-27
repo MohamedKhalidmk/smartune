@@ -15,6 +15,9 @@ Two reports from judge_outputs()'s results:
    training/report.py, for consistency across the pipeline.
 """
 
+from __future__ import annotations
+
+
 REGRESSION_THRESHOLD = 1.5  # avg score drop (0-10 scale) considered a
                              # genuine regression, not just noise/a tie
 
