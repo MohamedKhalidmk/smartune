@@ -38,7 +38,7 @@ about 4.4x versus DDP (26.8GB to 6.2GB on TPU). See `training/jax_v_pytorch/`.
 **Forecasting-method comparison.** A controlled comparison of
 learning-curve extrapolation methods (LC-PFN vs. a 2015 parametric
 baseline vs. a fixed-budget null) on 10 real fine-tuning runs found an
-apparent winner at n=8 disappeared at n=160. Forecast information
+apparent winner at n=150 disappeared at n=180. Forecast information
 (epochs observed) mattered more than method choice. See
 `notebooks/Forecasting_Feature_Research.ipynb`.
 
